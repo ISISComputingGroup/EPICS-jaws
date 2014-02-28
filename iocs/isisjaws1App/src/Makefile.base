@@ -1,0 +1,70 @@
+TOP=../..
+
+include $(TOP)/configure/CONFIG
+#----------------------------------------
+#  ADD MACRO DEFINITIONS AFTER THIS LINE
+#=============================
+
+#=============================
+# Build the IOC application
+
+PROD_IOC = $(IOCNAME)
+# $(IOCNAME).dbd will be created and installed
+DBD += $(IOCNAME).dbd
+
+# $(IOCNAME).dbd will be made up from these files:
+$(IOCNAME)_DBD += base.dbd
+
+# Include dbd files from all support applications:
+#$(IOCNAME)_DBD += xxx.dbd
+
+# Add all the support libraries needed by this IOC
+#$(IOCNAME)_LIBS += xxx
+
+#CALC needed for the Jaws logic
+$(IOCNAME)_LIBS += calc
+$(IOCNAME)_LIBS += sscan
+#Motor and asyn needed for the simulated motors
+$(IOCNAME)_LIBS += motorSimSupport
+$(IOCNAME)_LIBS += motor
+$(IOCNAME)_LIBS += asyn
+$(IOCNAME)_LIBS += devIocStats
+$(IOCNAME)_LIBS += pvdump easySQLite sqlite 
+$(IOCNAME)_LIBS += caPutLog
+$(IOCNAME)_LIBS += timestampRecord
+$(IOCNAME)_LIBS += icpconfig
+$(IOCNAME)_LIBS += autosave
+$(IOCNAME)_LIBS += utilities
+
+#CALC needed for the Jaws logic
+$(IOCNAME)_DBD += calcSupport.dbd 
+#Motor and asyn needed for the simulated motors
+$(IOCNAME)_DBD += asyn.dbd
+$(IOCNAME)_DBD += motorSupport.dbd
+$(IOCNAME)_DBD += motorSimSupport.dbd
+$(IOCNAME)_DBD += devIocStats.dbd
+$(IOCNAME)_DBD += pvdump.dbd 
+$(IOCNAME)_DBD += caPutLog.dbd 
+$(IOCNAME)_DBD += timestampRecord.dbd
+$(IOCNAME)_DBD += icpconfig.dbd
+$(IOCNAME)_DBD += asSupport.dbd
+
+# $(IOCNAME)_registerRecordDeviceDriver.cpp derives from $(IOCNAME).dbd
+$(IOCNAME)_SRCS += $(IOCNAME)_registerRecordDeviceDriver.cpp
+
+# Build the main IOC entry point on workstation OSs.
+$(IOCNAME)_SRCS_DEFAULT += $(IOCNAME)Main.cpp
+$(IOCNAME)_SRCS_vxWorks += -nil-
+
+# Add support from base/src/vxWorks if needed
+#$(IOCNAME)_OBJS_vxWorks += $(EPICS_BASE_BIN)/vxComLibrary
+
+# Finally link to the EPICS Base libraries
+$(IOCNAME)_LIBS += $(EPICS_BASE_IOC_LIBS)
+
+#===========================
+
+include $(TOP)/configure/RULES
+#----------------------------------------
+#  ADD RULES AFTER THIS LINE
+
