@@ -27,28 +27,28 @@ record (ao, "$(P)$(JAWS)VGAP:SP"){
 	field(OUT, "$(P)$(JAWS)_SPALT.E PP MS")
 	field(PREC, "3")
 }
-alias("$(P)$(JAWS)VGAP:SP", "$(P)$(JAWS)VGAP")
+alias("$(P)$(JAWS)VGAP:SP", "$(P)$(JAWS)VGAP:SP:RBV")
 
 record (ao, "$(P)$(JAWS)HGAP:SP"){
 	field(DESC, "Horizontal Gap")
 	field(OUT, "$(P)$(JAWS)_SPALT.F PP MS")
 	field(PREC, "3")
 }
-alias("$(P)$(JAWS)HGAP:SP", "$(P)$(JAWS)HGAP")
+alias("$(P)$(JAWS)HGAP:SP", "$(P)$(JAWS)HGAP:SP:RBV")
 
 record (ao, "$(P)$(JAWS)VCENT:SP"){
 	field(DESC, "Vertical Center")
 	field(OUT, "$(P)$(JAWS)_SPALT.G PP MS")
 	field(PREC, "3")
 }
-alias("$(P)$(JAWS)VCENT:SP", "$(P)$(JAWS)VCENT")
+alias("$(P)$(JAWS)VCENT:SP", "$(P)$(JAWS)VCENT:SP:RBV")
 
 record (ao, "$(P)$(JAWS)HCENT:SP"){
 	field(DESC, "Horizontal Center")
 	field(OUT, "$(P)$(JAWS)_SPALT.H PP MS")
 	field(PREC, "3")
 }
-alias("$(P)$(JAWS)HCENT:SP", "$(P)$(JAWS)HCENT")
+alias("$(P)$(JAWS)HCENT:SP", "$(P)$(JAWS)HCENT:SP:RBV")
 
 record (ao, "$(P)$(JAWS)JN:SP:RBV") {
 	field(DESC, "Value from North Jaw")
@@ -216,6 +216,7 @@ record (fanout, "$(P)$(JAWS)_SYNC") {
 	field(LNK3, "$(P)$(JAWS)JE.PROC NPP MS")
 	field(LNK4, "$(P)$(JAWS)JW.PROC NPP MS")
 	field(LNK5, "$(P)$(JAWS)_MPALT.PROC PP MS")
+	field(LNK5, "$(P)$(JAWS)_CALCP.PROC PP MS")
 }
 
 record (ai, "$(P)$(JAWS)MAXN") {
@@ -237,4 +238,54 @@ record (ai, "$(P)$(JAWS)MINW") {
 	field(PINI, "1")
 	field(DESC, "Min in West Direction")
 	field(INP, "$(P)$(mXW).LLM")
+}
+
+record (transform, "$(P)$(JAWS)_CALCP"){
+	field(DESC, "Motor Values to Gap and Center")
+	field(INPA, "$(P)$(JAWS)JN NPP NMS")
+	field(INPB, "$(P)$(JAWS)JS NPP NMS")
+	field(INPC, "$(P)$(JAWS)JE NPP NMS")
+	field(INPD, "$(P)$(JAWS)JW NPP NMS")
+	field(CLCE, "A-B")
+	field(CLCF, "(A+B)/2")
+	field(CLCG, "C-D")
+	field(CLCH, "(C+D)/2")
+	#field(OUTA, "$(P)$(JAWS)JN:SP.VAL PP MS")
+	#field(OUTB, "$(P)$(JAWS)JS:SP.VAL PP MS")
+	#field(OUTC, "$(P)$(JAWS)JE:SP.VAL PP MS")
+	#field(OUTD, "$(P)$(JAWS)JW:SP.VAL PP MS")
+	field(OUTE, "$(P)$(JAWS)VGAP.VAL PP MS")
+	field(OUTF, "$(P)$(JAWS)VCENT.VAL PP MS")
+	field(OUTG, "$(P)$(JAWS)HGAP.VAL PP MS")
+	field(OUTH, "$(P)$(JAWS)HCENT.VAL PP MS")
+	field(PREC, "3")
+	field(INPI, "$(P)$(JAWS)COORDSYS.VAL")
+	field(CMTA, "North Value")
+	field(CMTB, "South Value")
+	field(CMTC, "East Value")
+	field(CMTD, "West Value")
+	field(CMTE, "Calculated Vertical Gap")
+	field(CMTF, "Calculated Vertical Center")
+	field(CMTG, "Calculated Horizontal Gap")
+	field(CMTH, "Calculated Horizontal Center")
+}
+
+record (ao, "$(P)$(JAWS)HCENT"){
+	field(DESC, "Horizontal Center")
+	field(PREC, "3")
+}
+
+record (ao, "$(P)$(JAWS)VCENT"){
+	field(DESC, "Actual Vertical Center")
+	field(PREC, "3")
+}
+
+record (ao, "$(P)$(JAWS)HGAP"){
+	field(DESC, "Actual Horizontal Gap")
+	field(PREC, "3")
+}
+
+record (ao, "$(P)$(JAWS)VGAP"){
+	field(DESC, "Actual Vertical Gap")
+	field(PREC, "3")
 }
