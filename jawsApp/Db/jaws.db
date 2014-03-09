@@ -71,7 +71,7 @@ record (ao, "$(P)$(JAWS)JW:SP:RBV") {
 }
 
 record (transform, "$(P)$(JAWS)_SPALT") {
-	field(DESC, "Setpoint changes filtering to all values")
+	field(DESC, "Setpoint changes to all values")
 	field(CLCA, "G+E/2")
 	field(CLCB, "(G-E/2)")
 	field(CLCC, "H+F/2")
