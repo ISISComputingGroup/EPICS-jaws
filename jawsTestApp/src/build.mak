@@ -24,6 +24,10 @@ $(APPNAME)_DBD += pvdump.dbd
 $(APPNAME)_DBD += asSupport.dbd
 $(APPNAME)_DBD += devIocStats.dbd
 $(APPNAME)_DBD += caPutLog.dbd
+$(APPNAME)_DBD += asyn.dbd
+$(APPNAME)_DBD += motorSimSupport.dbd
+$(APPNAME)_DBD += motorSupport.dbd
+$(APPNAME)_DBD += calcSupport.dbd 
 ## add other dbd here ##
 #$(APPNAME)_DBD += xxx.dbd
 
@@ -35,7 +39,11 @@ $(APPNAME)_LIBS += pvdump easySQLite sqlite
 $(APPNAME)_LIBS += caPutLog
 $(APPNAME)_LIBS += icpconfig
 $(APPNAME)_LIBS += autosave
+$(APPNAME)_LIBS += calc
 $(APPNAME)_LIBS += utilities
+$(APPNAME)_LIBS += motorSimSupport motor
+$(APPNAME)_LIBS += asyn
+
 ## Add other libraries here ##
 #$(APPNAME)_LIBS += xxx
 

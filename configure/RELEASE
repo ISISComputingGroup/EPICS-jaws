@@ -46,5 +46,6 @@ UTILITIES=$(SUPPORT)/utilities
 ICPCONFIG=$(SUPPORT)/icpconfig
 ONCRPC=$(SUPPORT)/oncrpc/2
 SNCSEQ=$(SUPPORT)/seq/2-1-11
+ZLIB=$(SUPPORT)/zlib/1-2-8
 
 include $(TOP)/../../ISIS_CONFIG.$(EPICS_HOST_ARCH)
