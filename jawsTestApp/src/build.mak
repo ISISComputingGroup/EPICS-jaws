@@ -43,6 +43,7 @@ $(APPNAME)_LIBS += calc
 $(APPNAME)_LIBS += utilities
 $(APPNAME)_LIBS += motorSimSupport motor
 $(APPNAME)_LIBS += asyn
+$(APPNAME)_LIBS += sscan
 
 ## Add other libraries here ##
 #$(APPNAME)_LIBS += xxx
