@@ -1,4 +1,4 @@
-record(motor,"$(P)m$(M)")
+record(motor,"$(P)$(M)")
 {
 	field(DESC,"motor $(M)")
 	field(DTYP,"asynMotor")
