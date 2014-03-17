@@ -2,30 +2,35 @@ record (ao, "$(P)$(JAWS)JN:SP"){
 	field(DESC, "North Jaw Value")
 	field(OUT, "$(P)$(JAWS)_SPALT.A PP MS")
 	field(PREC, "3")
+    info(archive, "VAL")
 }
 
 record (ao, "$(P)$(JAWS)JS:SP"){
 	field(DESC, "South Jaw Value")
 	field(OUT, "$(P)$(JAWS)_SPALT.B PP MS")
 	field(PREC, "3")
+    info(archive, "VAL")
 }
 
 record (ao, "$(P)$(JAWS)JE:SP"){
 	field(DESC, "East Jaw Value")
 	field(OUT, "$(P)$(JAWS)_SPALT.C PP MS")
 	field(PREC, "3")
+    info(archive, "VAL")
 }
 
 record (ao, "$(P)$(JAWS)JW:SP"){
 	field(DESC, "West Jaw Value")
 	field(OUT, "$(P)$(JAWS)_SPALT.D PP MS")
 	field(PREC, "3")
+    info(archive, "VAL")
 }
 
 record (ao, "$(P)$(JAWS)VGAP:SP"){
 	field(DESC, "Vertical Gap")
 	field(OUT, "$(P)$(JAWS)_SPALT.E PP MS")
 	field(PREC, "3")
+    info(archive, "VAL")
 }
 alias("$(P)$(JAWS)VGAP:SP", "$(P)$(JAWS)VGAP:SP:RBV")
 
@@ -33,6 +38,7 @@ record (ao, "$(P)$(JAWS)HGAP:SP"){
 	field(DESC, "Horizontal Gap")
 	field(OUT, "$(P)$(JAWS)_SPALT.F PP MS")
 	field(PREC, "3")
+    info(archive, "VAL")
 }
 alias("$(P)$(JAWS)HGAP:SP", "$(P)$(JAWS)HGAP:SP:RBV")
 
@@ -40,6 +46,7 @@ record (ao, "$(P)$(JAWS)VCENT:SP"){
 	field(DESC, "Vertical Center")
 	field(OUT, "$(P)$(JAWS)_SPALT.G PP MS")
 	field(PREC, "3")
+    info(archive, "VAL")
 }
 alias("$(P)$(JAWS)VCENT:SP", "$(P)$(JAWS)VCENT:SP:RBV")
 
@@ -47,27 +54,32 @@ record (ao, "$(P)$(JAWS)HCENT:SP"){
 	field(DESC, "Horizontal Center")
 	field(OUT, "$(P)$(JAWS)_SPALT.H PP MS")
 	field(PREC, "3")
+    info(archive, "VAL")
 }
 alias("$(P)$(JAWS)HCENT:SP", "$(P)$(JAWS)HCENT:SP:RBV")
 
 record (ao, "$(P)$(JAWS)JN:SP:RBV") {
 	field(DESC, "Value from North Jaw")
 	field(PREC, "3")
+    info(archive, "VAL")
 }
 
 record (ao, "$(P)$(JAWS)JS:SP:RBV") {
 	field(DESC, "Value from South Jaw")
 	field(PREC, "3")
+    info(archive, "VAL")
 }
 
 record (ao, "$(P)$(JAWS)JE:SP:RBV") {
 	field(DESC, "Value from East Jaw")
 	field(PREC, "3")
+    info(archive, "VAL")
 }
 
 record (ao, "$(P)$(JAWS)JW:SP:RBV") {
 	field(DESC, "Value from West Jaw")
 	field(PREC, "3")
+    info(archive, "VAL")
 }
 
 record (transform, "$(P)$(JAWS)_SPALT") {
@@ -178,21 +190,25 @@ record (seq, "$(P)$(JAWS)refresh") {
 record (ai, "$(P)$(JAWS)JN") {
 	field(DESC, "Current North Jaw position")
 	field(PREC, "3")
+    info(archive, "VAL")
 }
 
 record (ai, "$(P)$(JAWS)JS") {
 	field(DESC, "Current South Jaw position")
 	field(PREC, "3")
+    info(archive, "VAL")
 }
 
 record (ai, "$(P)$(JAWS)JE") {
 	field(DESC, "Current East Jaw position")
 	field(PREC, "3")
+    info(archive, "VAL")
 }
 
 record (ai, "$(P)$(JAWS)JW") {
 	field(DESC, "Current West Jaw position")
 	field(PREC, "3")
+    info(archive, "VAL")
 }
 
 record (seq, "$(P)$(JAWS)_REFRESH") {
@@ -273,19 +289,23 @@ record (transform, "$(P)$(JAWS)_CALCP"){
 record (ao, "$(P)$(JAWS)HCENT"){
 	field(DESC, "Horizontal Center")
 	field(PREC, "3")
+    info(archive, "VAL")
 }
 
 record (ao, "$(P)$(JAWS)VCENT"){
 	field(DESC, "Actual Vertical Center")
 	field(PREC, "3")
+    info(archive, "VAL")
 }
 
 record (ao, "$(P)$(JAWS)HGAP"){
 	field(DESC, "Actual Horizontal Gap")
 	field(PREC, "3")
+    info(archive, "VAL")
 }
 
 record (ao, "$(P)$(JAWS)VGAP"){
 	field(DESC, "Actual Vertical Gap")
 	field(PREC, "3")
+    info(archive, "VAL")
 }
