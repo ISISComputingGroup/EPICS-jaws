@@ -88,14 +88,14 @@ record (transform, "$(P)$(JAWS)_SPALT") {
 	field(CLCB, "(G-E/2)")
 	field(CLCC, "H+F/2")
 	field(CLCD, "(H-F/2)")
-	field(CLCE, "A-(B*-1)")
-	field(CLCF, "C-(D*-1)")
-	field(CLCG, "(A+(B*-1))/2")
-	field(CLCH, "(C+(D*-1))/2")
+	field(CLCE, "A-(B*I)")
+	field(CLCF, "C-(D*I)")
+	field(CLCG, "(A+(B*I))/2")
+	field(CLCH, "(C+(D*I))/2")
 	field(CLCJ, "A")
-	field(CLCK, "B*-1")
+	field(CLCK, "B*I")
 	field(CLCL, "C")
-	field(CLCM, "D*-1")
+	field(CLCM, "D*I")
 	field(INPN, "1")
 	field(OUTA, "$(P)$(JAWS)JN:SP.VAL PP MS")
 	field(OUTB, "$(P)$(JAWS)JS:SP.VAL PP MS")
@@ -111,7 +111,7 @@ record (transform, "$(P)$(JAWS)_SPALT") {
 	field(OUTM, "$(P)$(mXW).VAL PP MS")
 	field(OUTN, "$(P)$(JAWS)gate.VAL PP MS")
 	field(PREC, "3")
-	field(INPI, "$(P)$(JAWS)COORDSYS.VAL")
+	field(INPI, "$(P)$(JAWS)SWMULT.VAL")
 	field(CMTA, "Calculated North Value")
 	field(CMTB, "Calculated South Value")
 	field(CMTC, "Calculated East Value")
@@ -147,7 +147,7 @@ record (transform, "$(P)$(JAWS)_MPALT"){
 	field(OUTG, "$(P)$(JAWS)HGAP:SP.VAL PP MS")
 	field(OUTH, "$(P)$(JAWS)HCENT:SP.VAL PP MS")
 	field(PREC, "3")
-	field(INPI, "$(P)$(JAWS)COORDSYS.VAL")
+	field(INPI, "1")
 	field(CMTA, "North Value")
 	field(CMTB, "South Value")
 	field(CMTC, "East Value")
@@ -158,10 +158,9 @@ record (transform, "$(P)$(JAWS)_MPALT"){
 	field(CMTH, "Calculated Horizontal Center")
 }
 
-record (bo, "$(P)$(JAWS)COORDSYS") {
-	field(DESC, "Out from center or both in same plane")
-	field(UDF, "0")
-	field(DOL, "$(RELTOCENTER=0)")
+record (ai, "$(P)$(JAWS)SWMULT") {
+	field(DESC, "From center(-1) or same plane(1)")
+	field(VAL, "-1")
 }
 
 record (fanout, "$(P)$(JAWS)_RBV:SYNC") {
@@ -195,7 +194,8 @@ record (calcout, "$(P)$(JAWS)JS:CONV") {
 	field(DESC, "Current South Jaw position")
 	field(PREC, "3")
 	field(DTYP, "Soft Channel")
-	field(CALC, "A*-1")
+	field(INPB, "$(P)$(JAWS)SWMULT.VAL NPP NMS")
+	field(CALC, "A*B")
 	field(OUT, "$(P)$(JAWS)JS NPP MS")
 }
 
@@ -203,7 +203,8 @@ record (calcout, "$(P)$(JAWS)JW:CONV") {
 	field(DESC, "Current South Jaw position")
 	field(PREC, "3")
 	field(DTYP, "Soft Channel")
-	field(CALC, "A*-1")
+	field(INPB, "$(P)$(JAWS)SWMULT.VAL NPP NMS")
+	field(CALC, "A*B")
 	field(OUT, "$(P)$(JAWS)JW NPP MS")
 }
 
@@ -211,7 +212,8 @@ record (calcout, "$(P)$(JAWS)JS:SP:RBV:CONV") {
 	field(DESC, "Current South Jaw position")
 	field(PREC, "3")
 	field(DTYP, "Soft Channel")
-	field(CALC, "A*-1")
+	field(INPB, "$(P)$(JAWS)SWMULT.VAL NPP NMS")
+	field(CALC, "A*B")
 	field(OUT, "$(P)$(JAWS)JS:SP:RBV NPP MS")
 }
 
@@ -219,7 +221,8 @@ record (calcout, "$(P)$(JAWS)JW:SP:RBV:CONV") {
 	field(DESC, "Current South Jaw position")
 	field(PREC, "3")
 	field(DTYP, "Soft Channel")
-	field(CALC, "A*-1")
+	field(INPB, "$(P)$(JAWS)SWMULT.VAL NPP NMS")
+	field(CALC, "A*B")
 	field(OUT, "$(P)$(JAWS)JW:SP:RBV NPP MS")
 }
 
@@ -311,7 +314,7 @@ record (transform, "$(P)$(JAWS)_CALCP"){
 	field(OUTG, "$(P)$(JAWS)HGAP.VAL PP MS")
 	field(OUTH, "$(P)$(JAWS)HCENT.VAL PP MS")
 	field(PREC, "3")
-	field(INPI, "$(P)$(JAWS)COORDSYS.VAL")
+	field(INPI, "1")
 	field(CMTA, "North Value")
 	field(CMTB, "South Value")
 	field(CMTC, "East Value")
