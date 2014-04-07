@@ -30,7 +30,7 @@ record (ao, "$(P)$(JAWS)VGAP:SP"){
 	field(DESC, "Vertical Gap")
 	field(OUT, "$(P)$(JAWS)_SPALT.E PP MS")
 	field(PREC, "3")
-    field(FLNK, "$(P)$(JAWS)_SPALT.PROC")
+#    field(FLNK, "$(P)$(JAWS)_SPALT.PROC")
     info(archive, "VAL")
 }
 alias("$(P)$(JAWS)VGAP:SP", "$(P)$(JAWS)VGAP:SP:RBV")
@@ -39,7 +39,7 @@ record (ao, "$(P)$(JAWS)HGAP:SP"){
 	field(DESC, "Horizontal Gap")
 	field(OUT, "$(P)$(JAWS)_SPALT.F PP MS")
 	field(PREC, "3")
-    field(FLNK, "$(P)$(JAWS)_SPALT.PROC")
+#    field(FLNK, "$(P)$(JAWS)_SPALT.PROC")
     info(archive, "VAL")
 }
 alias("$(P)$(JAWS)HGAP:SP", "$(P)$(JAWS)HGAP:SP:RBV")
@@ -48,7 +48,7 @@ record (ao, "$(P)$(JAWS)VCENT:SP"){
 	field(DESC, "Vertical Center")
 	field(OUT, "$(P)$(JAWS)_SPALT.G PP MS")
 	field(PREC, "3")
-    field(FLNK, "$(P)$(JAWS)_SPALT.PROC")
+#    field(FLNK, "$(P)$(JAWS)_SPALT.PROC")
     info(archive, "VAL")
 }
 alias("$(P)$(JAWS)VCENT:SP", "$(P)$(JAWS)VCENT:SP:RBV")
@@ -57,7 +57,7 @@ record (ao, "$(P)$(JAWS)HCENT:SP"){
 	field(DESC, "Horizontal Center")
 	field(OUT, "$(P)$(JAWS)_SPALT.H PP MS")
 	field(PREC, "3")
-    field(FLNK, "$(P)$(JAWS)_SPALT.PROC")
+#    field(FLNK, "$(P)$(JAWS)_SPALT.PROC")
     info(archive, "VAL")
 }
 alias("$(P)$(JAWS)HCENT:SP", "$(P)$(JAWS)HCENT:SP:RBV")
