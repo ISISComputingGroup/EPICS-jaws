@@ -1,0 +1,24 @@
+
+record (ai, "$(P)$(JAWS)MAXN") {
+	field(PINI, "1")
+	field(DESC, "Max in North Direction")
+	field(INP, "$(P)$(mXN).HLM")
+}
+
+record (ai, "$(P)$(JAWS)MINS") {
+	field(PINI, "1")
+	field(DESC, "Min in South Direction")
+	field(INP, "$(P)$(mXS).LLM")
+}
+
+record (ai, "$(P)$(JAWS)MAXE") {
+	field(PINI, "1")
+	field(DESC, "Max in East Direction")
+	field(INP, "$(P)$(mXE).HLM")
+}
+
+record (ai, "$(P)$(JAWS)MINW") {
+	field(PINI, "1")
+	field(DESC, "Min in West Direction")
+	field(INP, "$(P)$(mXW).LLM")
+}

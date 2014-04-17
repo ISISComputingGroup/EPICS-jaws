@@ -1,0 +1,188 @@
+# S1 is North, or East Jaw/slit
+# S2 is South or West Jaw/slit
+
+record (ao, "$(P)$(SLIT)$(S1):SP")
+{
+	field(DESC, "$(D1) Setpoint")
+	field(OUT, "$(P)$(SLIT)$(S1)_SPALT.A PP MS")
+	field(PREC, "3")
+    info(archive, "VAL")
+}
+alias("$(P)$(SLIT)$(S1):SP", "$(P)$(SLIT)$(S1):SP:RBV")
+
+record (ao, "$(P)$(SLIT)$(S2):SP")
+{
+	field(DESC, "$(D2) Setpoint")
+	field(OUT, "$(P)$(SLIT)$(S1)_SPALT.B PP MS")
+	field(PREC, "3")
+    info(archive, "VAL")
+}
+alias("$(P)$(SLIT)$(S2):SP", "$(P)$(SLIT)$(S2):SP:RBV")
+
+record (ao, "$(P)$(SLIT)$(GAP):SP")
+{
+	field(DESC, "$(DGAP) Setpoint")
+	field(OUT, "$(P)$(SLIT)$(S1)_SPALT.C PP MS")
+	field(PREC, "3")
+    info(archive, "VAL")
+}
+alias("$(P)$(SLIT)$(GAP):SP", "$(P)$(SLIT)$(GAP):SP:RBV")
+
+record (ao, "$(P)$(SLIT)$(CENTRE):SP")
+{
+	field(DESC, "$(DCENTRE) Setpoint")
+	field(OUT, "$(P)$(SLIT)$(S1)_SPALT.D PP MS")
+	field(PREC, "3")
+    info(archive, "VAL")
+}
+alias("$(P)$(SLIT)$(CENTRE):SP", "$(P)$(SLIT)$(CENTRE):SP:RBV")
+
+# set correct SPALT values on init
+record (transform, "$(P)$(SLIT)$(S1)$(S2)INIT")
+{
+	field(DESC, "Motor Value Init")
+    field(COPT, "Always")
+    field(PINI, "YES")
+	field(INPE, "$(P)$(M1).VAL NPP NMS")
+	field(INPF, "$(P)$(M2).VAL NPP NMS")
+	field(INPI, "$(P)$(SLIT)$(S1)_SWMULT.VAL")
+	field(CLCA, "E")
+	field(CLCB, "F*I")
+	field(OUTA, "$(P)$(SLIT)$(S1)_SPALT.A NPP NMS")
+	field(OUTB, "$(P)$(SLIT)$(S1)_SPALT.B PP NMS")
+	field(PREC, "3")
+	field(CMTA, "$(D1) Value")
+	field(CMTB, "$(D2) Value")
+	field(CMTE, "Current $(M1) Value")
+	field(CMTF, "Current $(M2) Value")
+}
+
+record(ao, "$(P)$(SLIT)$(S1):BPUT") 
+{
+  field(SDIS, "$(P)$(SLIT)$(S1):SP.PACT  NPP NMS")
+  field(OUT, "$(P)$(SLIT)$(S1):SP.VAL  PP MS")
+}
+
+record(ao, "$(P)$(SLIT)$(S2):BPUT") 
+{
+  field(SDIS, "$(P)$(SLIT)$(S2):SP.PACT  NPP NMS")
+  field(OUT, "$(P)$(SLIT)$(S2):SP.VAL  PP MS")
+}
+
+record(ao, "$(P)$(SLIT)$(GAP):BPUT") 
+{
+  field(SDIS, "$(P)$(SLIT)$(GAP):SP.PACT  NPP NMS")
+  field(OUT, "$(P)$(SLIT)$(GAP):SP.VAL  PP MS")
+}
+
+record(ao, "$(P)$(SLIT)$(CENTRE):BPUT") {
+  field(SDIS, "$(P)$(SLIT)$(CENTRE):SP.PACT  NPP NMS")
+  field(OUT, "$(P)$(SLIT)$(CENTRE):SP.VAL  PP MS")
+}
+
+record (ai, "$(P)$(SLIT)$(S1)") 
+{
+	field(DESC, "Current $(D1) position")
+	field(PREC, "3")
+    info(archive, "VAL")
+}
+
+record (ai, "$(P)$(SLIT)$(S2)") 
+{
+	field(DESC, "Current $(D2) position")
+	field(PREC, "3")
+    info(archive, "VAL")
+}
+
+record (ai, "$(P)$(SLIT)$(GAP)") 
+{
+	field(DESC, "Current $(DGAP) position")
+	field(PREC, "3")
+    info(archive, "VAL")
+}
+
+record (ai, "$(P)$(SLIT)$(CENTRE)") 
+{
+	field(DESC, "Current $(DCENTRE) position")
+	field(PREC, "3")
+    info(archive, "VAL")
+}
+
+# slip setpoint -> motor setpoint -> jaws setpoint readback
+record (transform, "$(P)$(SLIT)$(S1)_SPALT") 
+{
+	field(DESC, "Slit SP to motor SP")
+    field(COPT, "Conditional")
+	field(INPI, "$(P)$(SLIT)$(S1)_SWMULT.VAL")
+	field(CLCA, "D+C/2")
+	field(CLCB, "(D-C/2)/I")
+	field(CLCC, "A-(B*I)")
+	field(CLCD, "(A+(B*I))/2")
+	field(CLCE, "A")
+	field(CLCF, "B*I")
+	field(OUTA, "$(P)$(SLIT)$(S1):BPUT.VAL PP MS")
+	field(OUTB, "$(P)$(SLIT)$(S2):BPUT.VAL PP MS")
+	field(OUTC, "$(P)$(SLIT)$(GAP):BPUT.VAL PP MS")
+	field(OUTD, "$(P)$(SLIT)$(CENTRE):BPUT.VAL PP MS")
+	field(OUTE, "$(P)$(M1).VAL PP MS")
+	field(OUTF, "$(P)$(M2).VAL PP MS")
+	field(PREC, "3")
+	field(CMTA, "Calculated $(D1) Value")
+	field(CMTB, "Calculated $(D2) Value")
+	field(CMTC, "Calculated $(DGAP) Value")
+	field(CMTD, "Calculated $(DCENTRE) Value")
+	field(CMTE, "Calculated $(M1) Value")
+	field(CMTF, "Calculated $(M2) Value")
+}
+
+record (transform, "$(P)$(SLIT)$(S1)$(S2)_RBALT"){
+	field(DESC, "Motor Value to Jaws Value")
+    field(COPT, "Always")
+	field(SCAN, ".1 second")
+	field(INPE, "$(P)$(M1).RBV NPP NMS")
+	field(INPF, "$(P)$(M2).RBV NPP NMS")
+	field(INPI, "$(P)$(SLIT)$(S1)_SWMULT.VAL")
+	field(CLCA, "E")
+	field(CLCB, "F*I")
+	field(CLCC, "A-B*I")
+	field(CLCD, "(A+B*I)/2")
+	field(OUTA, "$(P)$(SLIT)$(S1).VAL PP MS")
+	field(OUTB, "$(P)$(SLIT)$(S2).VAL PP MS")
+	field(OUTC, "$(P)$(SLIT)$(GAP).VAL PP MS")
+	field(OUTD, "$(P)$(SLIT)$(CENTRE).VAL PP MS")
+	field(PREC, "3")
+	field(CMTA, "$(D1) Value")
+	field(CMTB, "$(D2) Value")
+	field(CMTC, "$(DGAP) Value")
+	field(CMTD, "$(DCENTRE) Value")
+	field(CMTE, "Current $(M1) Value")
+	field(CMTF, "Current $(M2) Value")
+	field(SDIS, "$(P)$(SLIT)$(S1)_SPALT.PACT")
+}
+
+record (ai, "$(P)$(SLIT)$(S1)_SWMULT") {
+	field(DESC, "From center(-1) or same plane(1)")
+	field(VAL, "-1")
+}
+
+record (seq, "$(P)$(SLIT)$(S1)AMDEL") {
+	field(PINI, "1")
+	field(DOL1, "$(P)$(M1).ADEL NPP NMS")
+	field(LNK1, "$(P)$(SLIT)$(S1).ADEL NPP NMS")
+	field(DOL2, "$(P)$(M2).ADEL NPP NMS")
+	field(LNK2, "$(P)$(SLIT)$(S2).ADEL NPP NMS")
+	field(DOL3, "$(P)$(M1).ADEL NPP NMS")
+	field(LNK3, "$(P)$(SLIT)$(CENTRE).ADEL NPP NMS")
+	field(DOL4, "$(P)$(M1).ADEL NPP NMS")
+	field(LNK4, "$(P)$(SLIT)$(GAP).ADEL NPP NMS")
+	field(DOL5, "$(P)$(M1).MDEL NPP NMS")
+	field(LNK5, "$(P)$(SLIT)$(S1).MDEL NPP NMS")
+	field(DOL6, "$(P)$(M2).MDEL NPP NMS")
+	field(LNK6, "$(P)$(SLIT)$(S2).MDEL NPP NMS")
+	field(DOL7, "$(P)$(M1).MDEL NPP NMS")
+	field(LNK7, "$(P)$(SLIT)$(CENTRE).MDEL NPP NMS")
+	field(DOL8, "$(P)$(M1).MDEL NPP NMS")
+	field(LNK8, "$(P)$(SLIT)$(GAP).MDEL NPP NMS")
+}
+
+
