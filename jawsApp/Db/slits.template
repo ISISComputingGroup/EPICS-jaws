@@ -1,6 +1,9 @@
 # S1 is North, or East Jaw/slit
 # S2 is South or West Jaw/slit
 
+# coordinate system is cartesian for jaws, but motors may be defined
+# such that motion away from centre is always positive. This is controlled
+# by the SWMULT variable
 record (ao, "$(P)$(SLIT)$(S1):SP")
 {
 	field(DESC, "$(D1) Setpoint")
@@ -114,10 +117,10 @@ record (transform, "$(P)$(SLIT)$(S1)_SPALT")
 	field(DESC, "Slit SP to motor SP")
     field(COPT, "Conditional")
 	field(INPI, "$(P)$(SLIT)$(S1)_SWMULT.VAL")
-	field(CLCA, "D+C/2")
-	field(CLCB, "(D-C/2)/I")
-	field(CLCC, "A-(B*I)")
-	field(CLCD, "(A+(B*I))/2")
+	field(CLCA, "(D+C/2)")
+	field(CLCB, "(D-C/2)")
+	field(CLCC, "(A-B)")
+	field(CLCD, "(A+B)/2")
 	field(CLCE, "A")
 	field(CLCF, "B*I")
 	field(OUTA, "$(P)$(SLIT)$(S1):BPUT.VAL PP MS")
@@ -144,8 +147,8 @@ record (transform, "$(P)$(SLIT)$(S1)$(S2)_RBALT"){
 	field(INPI, "$(P)$(SLIT)$(S1)_SWMULT.VAL")
 	field(CLCA, "E")
 	field(CLCB, "F*I")
-	field(CLCC, "A-B*I")
-	field(CLCD, "(A+B*I)/2")
+	field(CLCC, "(A-B)")
+	field(CLCD, "(A+B)/2")
 	field(OUTA, "$(P)$(SLIT)$(S1).VAL PP MS")
 	field(OUTB, "$(P)$(SLIT)$(S2).VAL PP MS")
 	field(OUTC, "$(P)$(SLIT)$(GAP).VAL PP MS")
@@ -160,6 +163,9 @@ record (transform, "$(P)$(SLIT)$(S1)$(S2)_RBALT"){
 	field(SDIS, "$(P)$(SLIT)$(S1)_SPALT.PACT")
 }
 
+# this is how motor positions are done - jaws are in a cartesian system where
+# North and east are positive, south and west are negative wheeras motors may
+# be defined so that motion away from centre is always positive
 record (ai, "$(P)$(SLIT)$(S1)_SWMULT") {
 	field(DESC, "From center(-1) or same plane(1)")
 	field(VAL, "-1")
