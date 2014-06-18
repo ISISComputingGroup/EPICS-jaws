@@ -1,24 +1,124 @@
 
 record (ai, "$(P)$(JAWS)MAXN") {
+    field(SCAN, "1 second")
 	field(PINI, "1")
 	field(DESC, "Max in North Direction")
 	field(INP, "$(P)$(mXN).HLM")
 }
 
 record (ai, "$(P)$(JAWS)MINS") {
+    field(SCAN, "1 second")
 	field(PINI, "1")
 	field(DESC, "Min in South Direction")
 	field(INP, "$(P)$(mXS).LLM")
 }
 
 record (ai, "$(P)$(JAWS)MAXE") {
+    field(SCAN, "1 second")
 	field(PINI, "1")
 	field(DESC, "Max in East Direction")
 	field(INP, "$(P)$(mXE).HLM")
 }
 
 record (ai, "$(P)$(JAWS)MINW") {
+    field(SCAN, "1 second")
 	field(PINI, "1")
 	field(DESC, "Min in West Direction")
 	field(INP, "$(P)$(mXW).LLM")
+}
+
+#  do not PINI or autosave - underlying motor record will do this
+record(bo, "$(P)$(JAWS)ABLE:SP") {
+  field(DESC, "Jaws enable")
+  field(OUT, "$(P)$(JAWS)ABLEPUT.A PP MS")
+  field(ZNAM, "Enable")
+  field(ONAM, "Disable")
+}
+
+record(mbbi, "$(P)$(JAWS)ABLE") {
+  field(DESC, "Jaws enable status")
+  field(SCAN, "1 second")
+  field(INP, "$(P)$(JAWS)ABLEGET.F PP MS")
+  field(ZRST, "Enable")
+  field(ONST, "Disable")
+  field(TWST, "Unknown")
+  field(ZRVL, "0")
+  field(ONVL, "1")
+  field(TWVL, "2")
+  field(TWSV, "MINOR")
+}
+alias("$(P)$(JAWS)ABLE", "$(P)$(JAWS)ABLE:SP:RBV")
+
+record(transform, "$(P)$(JAWS)ABLEPUT") {
+  field(CLCB, "a")
+  field(CLCC, "a")
+  field(CLCD, "a")
+  field(OUTA, "$(P)$(mXN)_able PP MS")
+  field(OUTB, "$(P)$(mXS)_able PP MS")
+  field(OUTC, "$(P)$(mXE)_able PP MS")
+  field(OUTD, "$(P)$(mXW)_able PP MS")
+}
+
+record(transform, "$(P)$(JAWS)ABLEGET") {
+  field(INPA, "$(P)$(mXN)_able NPP MS")
+  field(INPB, "$(P)$(mXS)_able NPP MS")
+  field(INPC, "$(P)$(mXE)_able NPP MS")
+  field(INPD, "$(P)$(mXW)_able NPP MS")
+#  field(INPA, "$(P)$(mXN).DISA NPP MS")
+#  field(INPB, "$(P)$(mXS).DISA NPP MS")
+#  field(INPC, "$(P)$(mXE).DISA NPP MS")
+#  field(INPD, "$(P)$(mXW).DISA NPP MS")
+  field(CLCE, "a+b+c+d")
+  field(CLCF, "(e = 0) ? 0 : (e = 4 ? 1 : 2)")
+  field(CMTE, "Count of disabled motors")
+  field(CMTF, "enabled,disabled,unknown")
+}
+
+record(bo, "$(P)$(JAWS)LOCK:SP") {
+  field(DESC, "Jaws lock")
+  field(OUT, "$(P)$(JAWS)LOCKPUT.A PP MS")
+  field(ZNAM, "Unlocked")
+  field(ONAM, "Locked")
+}
+
+record(mbbi, "$(P)$(JAWS)LOCK") {
+  field(DESC, "Jaws lock status")
+  field(SCAN, "1 second")
+  field(INP, "$(P)$(JAWS)LOCKGET.F PP MS")
+  field(ZRST, "Unlocked")
+  field(ONST, "Locked")
+  field(TWST, "Unknown")
+  field(ZRVL, "0")
+  field(ONVL, "1")
+  field(TWVL, "2")
+  field(TWSV, "MINOR")
+}
+alias("$(P)$(JAWS)LOCK", "$(P)$(JAWS)LOCK:SP:RBV")
+
+record(transform, "$(P)$(JAWS)LOCKPUT") {
+  field(CLCB, "a")
+  field(CLCC, "a")
+  field(CLCD, "a")
+  field(OUTA, "$(P)$(mXN)_lock PP MS")
+  field(OUTB, "$(P)$(mXS)_lock PP MS")
+  field(OUTC, "$(P)$(mXE)_lock PP MS")
+  field(OUTD, "$(P)$(mXW)_lock PP MS")
+}
+
+record(transform, "$(P)$(JAWS)LOCKGET") {
+  field(INPA, "$(P)$(mXN)_lock NPP MS")
+  field(INPB, "$(P)$(mXS)_lock NPP MS")
+  field(INPC, "$(P)$(mXE)_lock NPP MS")
+  field(INPD, "$(P)$(mXW)_lock NPP MS")
+  field(CLCE, "a+b+c+d")
+  field(CMTE, "Count of locked motors")
+  field(CLCF, "(e = 0) ? 0 : (e = 4 ? 1 : 2)")
+#  field(INPA, "$(P)$(mXN).SPMG NPP MS")
+#  field(INPB, "$(P)$(mXS).SPMG NPP MS")
+#  field(INPC, "$(P)$(mXE).SPMG NPP MS")
+#  field(INPD, "$(P)$(mXW).SPMG NPP MS")
+#  field(CLCE, "a+b+c+d")
+#  field(CMTE, "Sum of SPMG values")
+#  field(CLCF, "(e = 0) ? 1 : (e = 12 ? 0 : 2)")
+  field(CMTF, "unlocked,locked,unknown")
 }

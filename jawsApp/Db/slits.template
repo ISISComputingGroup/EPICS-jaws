@@ -191,4 +191,12 @@ record (seq, "$(P)$(SLIT)$(S1)AMDEL") {
 	field(LNK8, "$(P)$(SLIT)$(GAP).MDEL NPP NMS")
 }
 
+record(stringin, "$(P)$(SLIT)$(S1):MOTOR") {
+    field(DESC, "$(D1) Motor name")
+    field(VAL, "$(M1)")
+}	
 
+record(stringin, "$(P)$(SLIT)$(S2):MOTOR") {
+    field(DESC, "$(D2) Motor name")
+    field(VAL, "$(M2)")
+}	
