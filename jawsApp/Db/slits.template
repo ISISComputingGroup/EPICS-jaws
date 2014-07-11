@@ -10,6 +10,7 @@ record (ao, "$(P)$(SLIT)$(S1):SP")
 	field(OUT, "$(P)$(SLIT)$(S1)_SPALT.A PP MS")
 	field(PREC, "3")
     info(archive, "VAL")
+    info(INTEREST, "HIGH")
 }
 alias("$(P)$(SLIT)$(S1):SP", "$(P)$(SLIT)$(S1):SP:RBV")
 
@@ -19,6 +20,7 @@ record (ao, "$(P)$(SLIT)$(S2):SP")
 	field(OUT, "$(P)$(SLIT)$(S1)_SPALT.B PP MS")
 	field(PREC, "3")
     info(archive, "VAL")
+    info(INTEREST, "HIGH")
 }
 alias("$(P)$(SLIT)$(S2):SP", "$(P)$(SLIT)$(S2):SP:RBV")
 
@@ -28,6 +30,7 @@ record (ao, "$(P)$(SLIT)$(GAP):SP")
 	field(OUT, "$(P)$(SLIT)$(S1)_SPALT.C PP MS")
 	field(PREC, "3")
     info(archive, "VAL")
+    info(INTEREST, "HIGH")
 }
 alias("$(P)$(SLIT)$(GAP):SP", "$(P)$(SLIT)$(GAP):SP:RBV")
 
@@ -37,6 +40,7 @@ record (ao, "$(P)$(SLIT)$(CENTRE):SP")
 	field(OUT, "$(P)$(SLIT)$(S1)_SPALT.D PP MS")
 	field(PREC, "3")
     info(archive, "VAL")
+    info(INTEREST, "HIGH")
 }
 alias("$(P)$(SLIT)$(CENTRE):SP", "$(P)$(SLIT)$(CENTRE):SP:RBV")
 
@@ -88,6 +92,7 @@ record (ai, "$(P)$(SLIT)$(S1)")
 	field(DESC, "Current $(D1) position")
 	field(PREC, "3")
     info(archive, "VAL")
+    info(INTEREST, "HIGH")
 }
 
 record (ai, "$(P)$(SLIT)$(S2)") 
@@ -95,6 +100,7 @@ record (ai, "$(P)$(SLIT)$(S2)")
 	field(DESC, "Current $(D2) position")
 	field(PREC, "3")
     info(archive, "VAL")
+    info(INTEREST, "HIGH")
 }
 
 record (ai, "$(P)$(SLIT)$(GAP)") 
@@ -102,6 +108,7 @@ record (ai, "$(P)$(SLIT)$(GAP)")
 	field(DESC, "Current $(DGAP) position")
 	field(PREC, "3")
     info(archive, "VAL")
+    info(INTEREST, "HIGH")
 }
 
 record (ai, "$(P)$(SLIT)$(CENTRE)") 
@@ -109,6 +116,7 @@ record (ai, "$(P)$(SLIT)$(CENTRE)")
 	field(DESC, "Current $(DCENTRE) position")
 	field(PREC, "3")
     info(archive, "VAL")
+    info(INTEREST, "HIGH")
 }
 
 # slip setpoint -> motor setpoint -> jaws setpoint readback
