@@ -9,6 +9,7 @@ record (ao, "$(P)$(SLIT)$(S1):SP")
 	field(DESC, "$(D1) Setpoint")
 	field(OUT, "$(P)$(SLIT)$(S1)_SPALT.A PP MS")
 	field(PREC, "3")
+	field(EGU, "")
     info(archive, "VAL")
     info(INTEREST, "HIGH")
 }
@@ -19,6 +20,7 @@ record (ao, "$(P)$(SLIT)$(S2):SP")
 	field(DESC, "$(D2) Setpoint")
 	field(OUT, "$(P)$(SLIT)$(S1)_SPALT.B PP MS")
 	field(PREC, "3")
+	field(EGU, "")
     info(archive, "VAL")
     info(INTEREST, "HIGH")
 }
@@ -29,6 +31,7 @@ record (ao, "$(P)$(SLIT)$(GAP):SP")
 	field(DESC, "$(DGAP) Setpoint")
 	field(OUT, "$(P)$(SLIT)$(S1)_SPALT.C PP MS")
 	field(PREC, "3")
+	field(EGU, "")
     info(archive, "VAL")
     info(INTEREST, "HIGH")
 }
@@ -39,6 +42,7 @@ record (ao, "$(P)$(SLIT)$(CENTRE):SP")
 	field(DESC, "$(DCENTRE) Setpoint")
 	field(OUT, "$(P)$(SLIT)$(S1)_SPALT.D PP MS")
 	field(PREC, "3")
+	field(EGU, "")
     info(archive, "VAL")
     info(INTEREST, "HIGH")
 }
@@ -91,6 +95,7 @@ record (ai, "$(P)$(SLIT)$(S1)")
 {
 	field(DESC, "Current $(D1) position")
 	field(PREC, "3")
+	field(EGU, "")
     info(archive, "VAL")
     info(INTEREST, "HIGH")
 }
@@ -99,6 +104,7 @@ record (ai, "$(P)$(SLIT)$(S2)")
 {
 	field(DESC, "Current $(D2) position")
 	field(PREC, "3")
+	field(EGU, "")
     info(archive, "VAL")
     info(INTEREST, "HIGH")
 }
@@ -107,6 +113,7 @@ record (ai, "$(P)$(SLIT)$(GAP)")
 {
 	field(DESC, "Current $(DGAP) position")
 	field(PREC, "3")
+	field(EGU, "")
     info(archive, "VAL")
     info(INTEREST, "HIGH")
 }
@@ -115,6 +122,7 @@ record (ai, "$(P)$(SLIT)$(CENTRE)")
 {
 	field(DESC, "Current $(DCENTRE) position")
 	field(PREC, "3")
+	field(EGU, "")
     info(archive, "VAL")
     info(INTEREST, "HIGH")
 }
