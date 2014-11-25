@@ -212,7 +212,13 @@ record(stringin, "$(P)$(SLIT)$(S1):MOTOR") {
     field(VAL, "$(M1)")
 }	
 
+
 record(stringin, "$(P)$(SLIT)$(S2):MOTOR") {
     field(DESC, "$(D2) Motor name")
     field(VAL, "$(M2)")
 }	
+
+# Create some aliases for the motors for use by the GUI etc
+alias("$(P)$(M1)", "$(P)$(SLIT)$(S1):MTR")
+alias("$(P)$(M2)", "$(P)$(SLIT)$(S2):MTR")
+
