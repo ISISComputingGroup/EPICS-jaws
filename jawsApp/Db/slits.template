@@ -187,6 +187,7 @@ record (ai, "$(P)$(SLIT)$(S1)_SWMULT") {
 	field(VAL, "-1")
 }
 
+## update slit archive and monitor deadbands from motor deadbands
 record (seq, "$(P)$(SLIT)$(S1)AMDEL") {
 	field(PINI, "1")
 	field(DOL1, "$(P)$(M1).ADEL NPP NMS")
@@ -206,6 +207,7 @@ record (seq, "$(P)$(SLIT)$(S1)AMDEL") {
 	field(DOL8, "$(P)$(M1).MDEL NPP NMS")
 	field(LNK8, "$(P)$(SLIT)$(GAP).MDEL NPP NMS")
 }
+
 
 record(stringin, "$(P)$(SLIT)$(S1):MOTOR") {
     field(DESC, "$(D1) Motor name")
