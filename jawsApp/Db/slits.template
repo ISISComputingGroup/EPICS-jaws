@@ -96,7 +96,7 @@ record (ai, "$(P)$(SLIT)$(S1)")
 	field(DESC, "Current $(D1) position")
 	field(PREC, "3")
 	field(EGU, "")
-    info(archive, "VAL")
+    info(archive, "0.1 VAL")
     info(INTEREST, "HIGH")
 }
 
@@ -105,7 +105,7 @@ record (ai, "$(P)$(SLIT)$(S2)")
 	field(DESC, "Current $(D2) position")
 	field(PREC, "3")
 	field(EGU, "")
-    info(archive, "VAL")
+    info(archive, "0.1 VAL")
     info(INTEREST, "HIGH")
 }
 
@@ -114,7 +114,7 @@ record (ai, "$(P)$(SLIT)$(GAP)")
 	field(DESC, "Current $(DGAP) position")
 	field(PREC, "3")
 	field(EGU, "")
-    info(archive, "VAL")
+    info(archive, "0.1 VAL")
     info(INTEREST, "HIGH")
 }
 
@@ -123,7 +123,7 @@ record (ai, "$(P)$(SLIT)$(CENTRE)")
 	field(DESC, "Current $(DCENTRE) position")
 	field(PREC, "3")
 	field(EGU, "")
-    info(archive, "VAL")
+    info(archive, "0.1 VAL")
     info(INTEREST, "HIGH")
 }
 
