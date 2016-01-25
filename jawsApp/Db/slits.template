@@ -99,6 +99,8 @@ record (ai, "$(P)$(SLIT)$(S1)")
     info(archive, "0.1 VAL")
     info(INTEREST, "HIGH")
 }
+# Add alias to expose the underlying DMOV
+alias("$(P)$(M1):DMOV", "$(P)$(SLIT)$(S1):DMOV")
 
 record (ai, "$(P)$(SLIT)$(S2)") 
 {
@@ -108,6 +110,8 @@ record (ai, "$(P)$(SLIT)$(S2)")
     info(archive, "0.1 VAL")
     info(INTEREST, "HIGH")
 }
+# Add alias to expose the underlying DMOV
+alias("$(P)$(M2):DMOV", "$(P)$(SLIT)$(S2):DMOV")
 
 record (ai, "$(P)$(SLIT)$(GAP)") 
 {
@@ -118,6 +122,16 @@ record (ai, "$(P)$(SLIT)$(GAP)")
     info(INTEREST, "HIGH")
 }
 
+# Calc record to create a DMOV for the GAP
+# DMOV = 1 when not moving and = 0 when moving, 
+# so if one or more of the slits are moving then the sum is less than 2
+record(calc, "$(P)$(SLIT)$(GAP):DMOV"){
+    field(SCAN,".1 second")
+    field(INPA, "$(P)$(M1):DMOV")
+    field(INPB, "$(P)$(M2):DMOV")
+    field("CALC", "A + B >= 2")
+}
+
 record (ai, "$(P)$(SLIT)$(CENTRE)") 
 {
 	field(DESC, "Current $(DCENTRE) position")
@@ -126,6 +140,12 @@ record (ai, "$(P)$(SLIT)$(CENTRE)")
     info(archive, "0.1 VAL")
     info(INTEREST, "HIGH")
 }
+
+# Use an alias to define the DMOV for the centre as being the same as the GAP
+# because they use the same motors.
+# This does mean the centre appears to be moving when the gap is changing but it
+# is an acceptable compromise
+alias("$(P)$(SLIT)$(GAP):DMOV", "$(P)$(SLIT)$(CENTRE):DMOV")
 
 # slip setpoint -> motor setpoint -> jaws setpoint readback
 record (transform, "$(P)$(SLIT)$(S1)_SPALT") 
