@@ -174,6 +174,7 @@ record (transform, "$(P)$(SLIT)$(S1)_SPALT")
 	field(CMTF, "Calculated $(M2) Value")
 }
 
+# This record also puts the GAP and CENTRE into alarm, but not the axes themselves
 record (transform, "$(P)$(SLIT)$(S1)$(S2)_RBALT"){
 	field(DESC, "Motor Value to Jaws Value")
     field(COPT, "Always")
@@ -185,8 +186,8 @@ record (transform, "$(P)$(SLIT)$(S1)$(S2)_RBALT"){
 	field(CLCB, "F*I")
 	field(CLCC, "(A-B)")
 	field(CLCD, "(A+B)/2")
-	field(OUTA, "$(P)$(SLIT)$(S1).VAL PP MS")
-	field(OUTB, "$(P)$(SLIT)$(S2).VAL PP MS")
+	field(OUTA, "$(P)$(SLIT)$(S1)_INTMED.VAL PP NMS")
+	field(OUTB, "$(P)$(SLIT)$(S2)_INTMED.VAL PP NMS")
 	field(OUTC, "$(P)$(SLIT)$(GAP).VAL PP MS")
 	field(OUTD, "$(P)$(SLIT)$(CENTRE).VAL PP MS")
 	field(PREC, "3")
@@ -196,6 +197,44 @@ record (transform, "$(P)$(SLIT)$(S1)$(S2)_RBALT"){
 	field(CMTD, "$(DCENTRE) Value")
 	field(CMTE, "Current $(M1) Value")
 	field(CMTF, "Current $(M2) Value")
+	field(SDIS, "$(P)$(SLIT)$(S1)_SPALT.PACT")
+    field(FLNK, "$(P)$(SLIT)$(S1)_ALARM")
+}
+
+# A intermediate value used to hold the jaws value before applying
+# the alarm 
+record(ai, "$(P)$(SLIT)$(S1)_INTMED"){
+}
+
+# A intermediate value used to hold the jaws value before applying
+# the alarm 
+record(ai, "$(P)$(SLIT)$(S2)_INTMED"){
+}
+
+# This puts the jaw into alarm by taking the alarm value from the underlying motor
+# and putting the value of the intermediate record.
+record (transform, "$(P)$(SLIT)$(S1)_ALARM"){
+	field(DESC, "Propagates the alarm from the motor")
+    field(COPT, "Always")
+	field(INPE, "$(P)$(SLIT)$(S1)_INTMED.VAL NPP NMS")
+	field(INPF, "$(P)$(M1).RBV NPP MS")
+	field(CLCB, "E")
+	field(OUTB, "$(P)$(SLIT)$(S1).VAL PP MS")
+	field(PREC, "3")
+	field(SDIS, "$(P)$(SLIT)$(S1)_SPALT.PACT")
+    field(FLNK, "$(P)$(SLIT)$(S2)_ALARM")
+}
+
+# This puts the jaw into alarm by taking the alarm value from the underlying motor
+# and putting the value of the intermediate record.
+record (transform, "$(P)$(SLIT)$(S2)_ALARM"){
+	field(DESC, "Propagates the alarm from the motor")
+    field(COPT, "Always")
+	field(INPE, "$(P)$(SLIT)$(S2)_INTMED.VAL NPP NMS")
+	field(INPF, "$(P)$(M2).RBV NPP MS")
+	field(CLCB, "E")
+	field(OUTB, "$(P)$(SLIT)$(S2).VAL PP MS")
+	field(PREC, "3")
 	field(SDIS, "$(P)$(SLIT)$(S1)_SPALT.PACT")
 }
 
