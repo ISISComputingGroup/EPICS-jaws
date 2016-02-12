@@ -1,30 +1,30 @@
 
 record (ai, "$(P)$(JAWS)MAXN") {
-    field(SCAN, "1 second")
+    field(SCAN, "Passive")
 	field(PINI, "1")
 	field(DESC, "Max in North Direction")
-	field(INP, "$(P)$(mXN).HLM")
+	field(INP, "$(P)$(mXN).HLM CP")
 }
 
 record (ai, "$(P)$(JAWS)MINS") {
-    field(SCAN, "1 second")
+    field(SCAN, "Passive")
 	field(PINI, "1")
 	field(DESC, "Min in South Direction")
-	field(INP, "$(P)$(mXS).LLM")
+	field(INP, "$(P)$(mXS).LLM CP")
 }
 
 record (ai, "$(P)$(JAWS)MAXE") {
-    field(SCAN, "1 second")
+    field(SCAN, "Passive")
 	field(PINI, "1")
 	field(DESC, "Max in East Direction")
-	field(INP, "$(P)$(mXE).HLM")
+	field(INP, "$(P)$(mXE).HLM CP")
 }
 
 record (ai, "$(P)$(JAWS)MINW") {
-    field(SCAN, "1 second")
+    field(SCAN, "Passive")
 	field(PINI, "1")
 	field(DESC, "Min in West Direction")
-	field(INP, "$(P)$(mXW).LLM")
+	field(INP, "$(P)$(mXW).LLM CP")
 }
 
 #  do not PINI or autosave - underlying motor record will do this
