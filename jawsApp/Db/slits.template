@@ -99,6 +99,8 @@ record (ai, "$(P)$(SLIT)$(S1)")
     info(archive, "0.1 VAL")
     info(INTEREST, "HIGH")
 }
+# Add alias to expose the underlying DMOV
+alias("$(P)$(M1):DMOV", "$(P)$(SLIT)$(S1):DMOV")
 
 record (ai, "$(P)$(SLIT)$(S2)") 
 {
@@ -108,6 +110,8 @@ record (ai, "$(P)$(SLIT)$(S2)")
     info(archive, "0.1 VAL")
     info(INTEREST, "HIGH")
 }
+# Add alias to expose the underlying DMOV
+alias("$(P)$(M2):DMOV", "$(P)$(SLIT)$(S2):DMOV")
 
 record (ai, "$(P)$(SLIT)$(GAP)") 
 {
@@ -118,6 +122,16 @@ record (ai, "$(P)$(SLIT)$(GAP)")
     info(INTEREST, "HIGH")
 }
 
+# Calc record to create a DMOV for the GAP
+# DMOV = 1 when not moving and = 0 when moving, 
+# so if one or more of the slits are moving then the sum is less than 2
+record(calc, "$(P)$(SLIT)$(GAP):DMOV"){
+    field(SCAN,".1 second")
+    field(INPA, "$(P)$(M1):DMOV")
+    field(INPB, "$(P)$(M2):DMOV")
+    field("CALC", "A + B >= 2")
+}
+
 record (ai, "$(P)$(SLIT)$(CENTRE)") 
 {
 	field(DESC, "Current $(DCENTRE) position")
@@ -126,6 +140,12 @@ record (ai, "$(P)$(SLIT)$(CENTRE)")
     info(archive, "0.1 VAL")
     info(INTEREST, "HIGH")
 }
+
+# Use an alias to define the DMOV for the centre as being the same as the GAP
+# because they use the same motors.
+# This does mean the centre appears to be moving when the gap is changing but it
+# is an acceptable compromise
+alias("$(P)$(SLIT)$(GAP):DMOV", "$(P)$(SLIT)$(CENTRE):DMOV")
 
 # slip setpoint -> motor setpoint -> jaws setpoint readback
 record (transform, "$(P)$(SLIT)$(S1)_SPALT") 
@@ -154,19 +174,20 @@ record (transform, "$(P)$(SLIT)$(S1)_SPALT")
 	field(CMTF, "Calculated $(M2) Value")
 }
 
+# This record also puts the GAP and CENTRE into alarm, but not the axes themselves
 record (transform, "$(P)$(SLIT)$(S1)$(S2)_RBALT"){
 	field(DESC, "Motor Value to Jaws Value")
     field(COPT, "Always")
 	field(SCAN, ".1 second")
-	field(INPE, "$(P)$(M1).RBV NPP NMS")
-	field(INPF, "$(P)$(M2).RBV NPP NMS")
+	field(INPE, "$(P)$(M1).RBV NPP MS")
+	field(INPF, "$(P)$(M2).RBV NPP MS")
 	field(INPI, "$(P)$(SLIT)$(S1)_SWMULT.VAL")
 	field(CLCA, "E")
 	field(CLCB, "F*I")
 	field(CLCC, "(A-B)")
 	field(CLCD, "(A+B)/2")
-	field(OUTA, "$(P)$(SLIT)$(S1).VAL PP MS")
-	field(OUTB, "$(P)$(SLIT)$(S2).VAL PP MS")
+	field(OUTA, "$(P)$(SLIT)$(S1)_INTMED.VAL PP NMS")
+	field(OUTB, "$(P)$(SLIT)$(S2)_INTMED.VAL PP NMS")
 	field(OUTC, "$(P)$(SLIT)$(GAP).VAL PP MS")
 	field(OUTD, "$(P)$(SLIT)$(CENTRE).VAL PP MS")
 	field(PREC, "3")
@@ -176,6 +197,44 @@ record (transform, "$(P)$(SLIT)$(S1)$(S2)_RBALT"){
 	field(CMTD, "$(DCENTRE) Value")
 	field(CMTE, "Current $(M1) Value")
 	field(CMTF, "Current $(M2) Value")
+	field(SDIS, "$(P)$(SLIT)$(S1)_SPALT.PACT")
+    field(FLNK, "$(P)$(SLIT)$(S1)_ALARM")
+}
+
+# A intermediate value used to hold the jaws value before applying
+# the alarm 
+record(ai, "$(P)$(SLIT)$(S1)_INTMED"){
+}
+
+# A intermediate value used to hold the jaws value before applying
+# the alarm 
+record(ai, "$(P)$(SLIT)$(S2)_INTMED"){
+}
+
+# This puts the jaw into alarm by taking the alarm value from the underlying motor
+# and putting the value of the intermediate record.
+record (transform, "$(P)$(SLIT)$(S1)_ALARM"){
+	field(DESC, "Propagates the alarm from the motor")
+    field(COPT, "Always")
+	field(INPE, "$(P)$(SLIT)$(S1)_INTMED.VAL NPP NMS")
+	field(INPF, "$(P)$(M1).RBV NPP MS")
+	field(CLCB, "E")
+	field(OUTB, "$(P)$(SLIT)$(S1).VAL PP MS")
+	field(PREC, "3")
+	field(SDIS, "$(P)$(SLIT)$(S1)_SPALT.PACT")
+    field(FLNK, "$(P)$(SLIT)$(S2)_ALARM")
+}
+
+# This puts the jaw into alarm by taking the alarm value from the underlying motor
+# and putting the value of the intermediate record.
+record (transform, "$(P)$(SLIT)$(S2)_ALARM"){
+	field(DESC, "Propagates the alarm from the motor")
+    field(COPT, "Always")
+	field(INPE, "$(P)$(SLIT)$(S2)_INTMED.VAL NPP NMS")
+	field(INPF, "$(P)$(M2).RBV NPP MS")
+	field(CLCB, "E")
+	field(OUTB, "$(P)$(SLIT)$(S2).VAL PP MS")
+	field(PREC, "3")
 	field(SDIS, "$(P)$(SLIT)$(S1)_SPALT.PACT")
 }
 
