@@ -1,5 +1,6 @@
 
 record (ai, "$(P)$(JAWS)MAXN") {
+    field(ASG, "$(ASG)")
     field(SCAN, "1 second")
 	field(PINI, "1")
 	field(DESC, "Max in North Direction")
@@ -7,6 +8,7 @@ record (ai, "$(P)$(JAWS)MAXN") {
 }
 
 record (ai, "$(P)$(JAWS)MINS") {
+    field(ASG, "$(ASG)")
     field(SCAN, "1 second")
 	field(PINI, "1")
 	field(DESC, "Min in South Direction")
@@ -14,6 +16,7 @@ record (ai, "$(P)$(JAWS)MINS") {
 }
 
 record (ai, "$(P)$(JAWS)MAXE") {
+    field(ASG, "$(ASG)")
     field(SCAN, "1 second")
 	field(PINI, "1")
 	field(DESC, "Max in East Direction")
@@ -21,6 +24,7 @@ record (ai, "$(P)$(JAWS)MAXE") {
 }
 
 record (ai, "$(P)$(JAWS)MINW") {
+    field(ASG, "$(ASG)")
     field(SCAN, "1 second")
 	field(PINI, "1")
 	field(DESC, "Min in West Direction")
@@ -29,6 +33,7 @@ record (ai, "$(P)$(JAWS)MINW") {
 
 #  do not PINI or autosave - underlying motor record will do this
 record(bo, "$(P)$(JAWS)ABLE:SP") {
+  field(ASG, "$(ASG)")
   field(DESC, "Jaws enable")
   field(OUT, "$(P)$(JAWS)ABLEPUT.A PP MS")
   field(ZNAM, "Enable")
@@ -36,6 +41,7 @@ record(bo, "$(P)$(JAWS)ABLE:SP") {
 }
 
 record(mbbi, "$(P)$(JAWS)ABLE") {
+  field(ASG, "$(ASG)")
   field(DESC, "Jaws enable status")
   field(SCAN, "1 second")
   field(INP, "$(P)$(JAWS)ABLEGET.F PP MS")
@@ -50,6 +56,7 @@ record(mbbi, "$(P)$(JAWS)ABLE") {
 alias("$(P)$(JAWS)ABLE", "$(P)$(JAWS)ABLE:SP:RBV")
 
 record(transform, "$(P)$(JAWS)ABLEPUT") {
+  field(ASG, "$(ASG)")
   field(CLCB, "a")
   field(CLCC, "a")
   field(CLCD, "a")
@@ -60,6 +67,7 @@ record(transform, "$(P)$(JAWS)ABLEPUT") {
 }
 
 record(transform, "$(P)$(JAWS)ABLEGET") {
+  field(ASG, "$(ASG)")
   field(INPA, "$(P)$(mXN)_able NPP MS")
   field(INPB, "$(P)$(mXS)_able NPP MS")
   field(INPC, "$(P)$(mXE)_able NPP MS")
@@ -75,6 +83,7 @@ record(transform, "$(P)$(JAWS)ABLEGET") {
 }
 
 record(bo, "$(P)$(JAWS)LOCK:SP") {
+  field(ASG, "$(ASG)")
   field(DESC, "Jaws lock")
   field(OUT, "$(P)$(JAWS)LOCKPUT.A PP MS")
   field(ZNAM, "Unlocked")
@@ -82,6 +91,7 @@ record(bo, "$(P)$(JAWS)LOCK:SP") {
 }
 
 record(mbbi, "$(P)$(JAWS)LOCK") {
+  field(ASG, "$(ASG)")
   field(DESC, "Jaws lock status")
   field(SCAN, "1 second")
   field(INP, "$(P)$(JAWS)LOCKGET.F PP MS")
@@ -96,6 +106,7 @@ record(mbbi, "$(P)$(JAWS)LOCK") {
 alias("$(P)$(JAWS)LOCK", "$(P)$(JAWS)LOCK:SP:RBV")
 
 record(transform, "$(P)$(JAWS)LOCKPUT") {
+  field(ASG, "$(ASG)")
   field(CLCB, "a")
   field(CLCC, "a")
   field(CLCD, "a")
@@ -106,6 +117,7 @@ record(transform, "$(P)$(JAWS)LOCKPUT") {
 }
 
 record(transform, "$(P)$(JAWS)LOCKGET") {
+  field(ASG, "$(ASG)")
   field(INPA, "$(P)$(mXN)_lock NPP MS")
   field(INPB, "$(P)$(mXS)_lock NPP MS")
   field(INPC, "$(P)$(mXE)_lock NPP MS")

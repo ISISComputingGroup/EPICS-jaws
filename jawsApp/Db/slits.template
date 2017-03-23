@@ -6,6 +6,7 @@
 # by the SWMULT variable
 record (ao, "$(P)$(SLIT)$(S1):SP")
 {
+    field(ASG, "$(ASG)")
 	field(DESC, "$(D1) Setpoint")
 	field(OUT, "$(P)$(SLIT)$(S1)_SPALT.A PP MS")
 	field(PREC, "3")
@@ -17,6 +18,7 @@ alias("$(P)$(SLIT)$(S1):SP", "$(P)$(SLIT)$(S1):SP:RBV")
 
 record (ao, "$(P)$(SLIT)$(S2):SP")
 {
+    field(ASG, "$(ASG)")
 	field(DESC, "$(D2) Setpoint")
 	field(OUT, "$(P)$(SLIT)$(S1)_SPALT.B PP MS")
 	field(PREC, "3")
@@ -28,6 +30,7 @@ alias("$(P)$(SLIT)$(S2):SP", "$(P)$(SLIT)$(S2):SP:RBV")
 
 record (ao, "$(P)$(SLIT)$(GAP):SP")
 {
+    field(ASG, "$(ASG)")
 	field(DESC, "$(DGAP) Setpoint")
 	field(OUT, "$(P)$(SLIT)$(S1)_SPALT.C PP MS")
 	field(PREC, "3")
@@ -39,6 +42,7 @@ alias("$(P)$(SLIT)$(GAP):SP", "$(P)$(SLIT)$(GAP):SP:RBV")
 
 record (ao, "$(P)$(SLIT)$(CENTRE):SP")
 {
+    field(ASG, "$(ASG)")
 	field(DESC, "$(DCENTRE) Setpoint")
 	field(OUT, "$(P)$(SLIT)$(S1)_SPALT.D PP MS")
 	field(PREC, "3")
@@ -51,6 +55,7 @@ alias("$(P)$(SLIT)$(CENTRE):SP", "$(P)$(SLIT)$(CENTRE):SP:RBV")
 # set correct SPALT values on init
 record (transform, "$(P)$(SLIT)$(S1)$(S2)INIT")
 {
+    field(ASG, "$(ASG)")
 	field(DESC, "Motor Value Init")
     field(COPT, "Always")
     field(PINI, "YES")
@@ -70,29 +75,34 @@ record (transform, "$(P)$(SLIT)$(S1)$(S2)INIT")
 
 record(ao, "$(P)$(SLIT)$(S1):BPUT") 
 {
+  field(ASG, "$(ASG)")
   field(SDIS, "$(P)$(SLIT)$(S1):SP.PACT  NPP NMS")
   field(OUT, "$(P)$(SLIT)$(S1):SP.VAL  PP MS")
 }
 
 record(ao, "$(P)$(SLIT)$(S2):BPUT") 
 {
+  field(ASG, "$(ASG)")
   field(SDIS, "$(P)$(SLIT)$(S2):SP.PACT  NPP NMS")
   field(OUT, "$(P)$(SLIT)$(S2):SP.VAL  PP MS")
 }
 
 record(ao, "$(P)$(SLIT)$(GAP):BPUT") 
 {
+  field(ASG, "$(ASG)")
   field(SDIS, "$(P)$(SLIT)$(GAP):SP.PACT  NPP NMS")
   field(OUT, "$(P)$(SLIT)$(GAP):SP.VAL  PP MS")
 }
 
 record(ao, "$(P)$(SLIT)$(CENTRE):BPUT") {
+  field(ASG, "$(ASG)")
   field(SDIS, "$(P)$(SLIT)$(CENTRE):SP.PACT  NPP NMS")
   field(OUT, "$(P)$(SLIT)$(CENTRE):SP.VAL  PP MS")
 }
 
 record (ai, "$(P)$(SLIT)$(S1)") 
 {
+    field(ASG, "$(ASG)")
 	field(DESC, "Current $(D1) position")
 	field(PREC, "3")
 	field(EGU, "")
@@ -104,6 +114,7 @@ alias("$(P)$(M1):DMOV", "$(P)$(SLIT)$(S1):DMOV")
 
 record (ai, "$(P)$(SLIT)$(S2)") 
 {
+    field(ASG, "$(ASG)")
 	field(DESC, "Current $(D2) position")
 	field(PREC, "3")
 	field(EGU, "")
@@ -115,6 +126,7 @@ alias("$(P)$(M2):DMOV", "$(P)$(SLIT)$(S2):DMOV")
 
 record (ai, "$(P)$(SLIT)$(GAP)") 
 {
+    field(ASG, "$(ASG)")
 	field(DESC, "Current $(DGAP) position")
 	field(PREC, "3")
 	field(EGU, "")
@@ -126,6 +138,7 @@ record (ai, "$(P)$(SLIT)$(GAP)")
 # DMOV = 1 when not moving and = 0 when moving, 
 # so if one or more of the slits are moving then the sum is less than 2
 record(calc, "$(P)$(SLIT)$(GAP):DMOV"){
+    field(ASG, "$(ASG)")
     field(SCAN,".1 second")
     field(INPA, "$(P)$(M1):DMOV")
     field(INPB, "$(P)$(M2):DMOV")
@@ -134,6 +147,7 @@ record(calc, "$(P)$(SLIT)$(GAP):DMOV"){
 
 record (ai, "$(P)$(SLIT)$(CENTRE)") 
 {
+    field(ASG, "$(ASG)")
 	field(DESC, "Current $(DCENTRE) position")
 	field(PREC, "3")
 	field(EGU, "")
@@ -150,6 +164,7 @@ alias("$(P)$(SLIT)$(GAP):DMOV", "$(P)$(SLIT)$(CENTRE):DMOV")
 # slip setpoint -> motor setpoint -> jaws setpoint readback
 record (transform, "$(P)$(SLIT)$(S1)_SPALT") 
 {
+    field(ASG, "$(ASG)")
 	field(DESC, "Slit SP to motor SP")
     field(COPT, "Conditional")
 	field(INPI, "$(P)$(SLIT)$(S1)_SWMULT.VAL")
@@ -176,6 +191,7 @@ record (transform, "$(P)$(SLIT)$(S1)_SPALT")
 
 # This record also puts the GAP and CENTRE into alarm, but not the axes themselves
 record (transform, "$(P)$(SLIT)$(S1)$(S2)_RBALT"){
+    field(ASG, "$(ASG)")
 	field(DESC, "Motor Value to Jaws Value")
     field(COPT, "Always")
 	field(SCAN, ".1 second")
@@ -204,16 +220,19 @@ record (transform, "$(P)$(SLIT)$(S1)$(S2)_RBALT"){
 # A intermediate value used to hold the jaws value before applying
 # the alarm 
 record(ai, "$(P)$(SLIT)$(S1)_INTMED"){
+  field(ASG, "$(ASG)")
 }
 
 # A intermediate value used to hold the jaws value before applying
 # the alarm 
 record(ai, "$(P)$(SLIT)$(S2)_INTMED"){
+  field(ASG, "$(ASG)")
 }
 
 # This puts the jaw into alarm by taking the alarm value from the underlying motor
 # and putting the value of the intermediate record.
 record (transform, "$(P)$(SLIT)$(S1)_ALARM"){
+    field(ASG, "$(ASG)")
 	field(DESC, "Propagates the alarm from the motor")
     field(COPT, "Always")
 	field(INPE, "$(P)$(SLIT)$(S1)_INTMED.VAL NPP NMS")
@@ -228,6 +247,7 @@ record (transform, "$(P)$(SLIT)$(S1)_ALARM"){
 # This puts the jaw into alarm by taking the alarm value from the underlying motor
 # and putting the value of the intermediate record.
 record (transform, "$(P)$(SLIT)$(S2)_ALARM"){
+    field(ASG, "$(ASG)")
 	field(DESC, "Propagates the alarm from the motor")
     field(COPT, "Always")
 	field(INPE, "$(P)$(SLIT)$(S2)_INTMED.VAL NPP NMS")
@@ -242,12 +262,14 @@ record (transform, "$(P)$(SLIT)$(S2)_ALARM"){
 # North and east are positive, south and west are negative wheeras motors may
 # be defined so that motion away from centre is always positive
 record (ai, "$(P)$(SLIT)$(S1)_SWMULT") {
+    field(ASG, "$(ASG)")
 	field(DESC, "From center(-1) or same plane(1)")
 	field(VAL, "-1")
 }
 
 ## update slit archive and monitor deadbands from motor deadbands
 record (seq, "$(P)$(SLIT)$(S1)AMDEL") {
+    field(ASG, "$(ASG)")
 	field(PINI, "1")
 	field(DOL1, "$(P)$(M1).ADEL NPP NMS")
 	field(LNK1, "$(P)$(SLIT)$(S1).ADEL NPP NMS")
@@ -269,12 +291,14 @@ record (seq, "$(P)$(SLIT)$(S1)AMDEL") {
 
 
 record(stringin, "$(P)$(SLIT)$(S1):MOTOR") {
+    field(ASG, "$(ASG)")
     field(DESC, "$(D1) Motor name")
     field(VAL, "$(M1)")
 }	
 
 
 record(stringin, "$(P)$(SLIT)$(S2):MOTOR") {
+    field(ASG, "$(ASG)")
     field(DESC, "$(D2) Motor name")
     field(VAL, "$(M2)")
 }	
