@@ -3,7 +3,7 @@ file "$(JAWS)/jawsApp/Db/jawsheader.template" {
 }
 
 file "$(JAWS)/jawsApp/Db/slits.template" {
-    { P=\$(P), SLIT=\$(JAWS), M1=\$(mXN), M2=\$(mXS), S1=JN, S2=JS, D1=North, D2=South, GAP=VGAP, DGAP=Vertical, CENTRE=VCENT, DCENTRE=Vertical, ASG=\$(ASG=DEFAULT), EGU=\$(EGU=mm) }
-    { P=\$(P), SLIT=\$(JAWS), M1=\$(mXE), M2=\$(mXW), S1=JE, S2=JW, D1=East, D2=West, GAP=HGAP, DGAP=Horizontal, CENTRE=HCENT, DCENTRE=Horizontal, ASG=\$(ASG=DEFAULT), EGU=\$(EGU=mm) }
+    { P=\$(P), SLIT=\$(JAWS), M1=\$(mXN), M2=\$(mXS), S1=JN, S2=JS, D1=North, D2=South, GAP=VGAP, DGAP=Vertical, CENTRE=VCENT, DCENTRE=Vertical, ASG=\$(ASG=DEFAULT), EGU=\$(EGU=), CENT_DISP=\$(CENT_DISP=0) }
+    { P=\$(P), SLIT=\$(JAWS), M1=\$(mXE), M2=\$(mXW), S1=JE, S2=JW, D1=East, D2=West, GAP=HGAP, DGAP=Horizontal, CENTRE=HCENT, DCENTRE=Horizontal, ASG=\$(ASG=DEFAULT), EGU=\$(EGU=), CENT_DISP=\$(CENT_DISP=0) }
 }
 

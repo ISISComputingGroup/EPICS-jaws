@@ -47,6 +47,7 @@ record (ao, "$(P)$(SLIT)$(CENTRE):SP")
 	field(OUT, "$(P)$(SLIT)$(S1)_SPALT.D PP MS")
 	field(PREC, "3")
 	field(EGU, "$(EGU)")
+	field(DISP, "$(CENT_DISP)")
     info(archive, "VAL")
     info(INTEREST, "HIGH")
 }
