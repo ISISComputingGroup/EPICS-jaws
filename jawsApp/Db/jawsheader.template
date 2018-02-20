@@ -1,34 +1,32 @@
 
 record (ai, "$(P)$(JAWS)MAXN") {
     field(ASG, "$(ASG)")
-    field(SCAN, "1 second")
 	field(PINI, "1")
 	field(DESC, "Max in North Direction")
-	field(INP, "$(P)$(mXN).HLM")
+	field(INP, "$(P)$(mXN).HLM CP")
 }
 
-record (ai, "$(P)$(JAWS)MINS") {
+record (calc, "$(P)$(JAWS)MINS") {
     field(ASG, "$(ASG)")
-    field(SCAN, "1 second")
 	field(PINI, "1")
 	field(DESC, "Min in South Direction")
-	field(INP, "$(P)$(mXS).LLM")
+	field(INPA, "$(P)$(mXS).HLM CP")
+	field(CALC, "-1*A")
 }
 
 record (ai, "$(P)$(JAWS)MAXE") {
     field(ASG, "$(ASG)")
-    field(SCAN, "1 second")
 	field(PINI, "1")
 	field(DESC, "Max in East Direction")
-	field(INP, "$(P)$(mXE).HLM")
+	field(INP, "$(P)$(mXE).HLM CP")
 }
 
-record (ai, "$(P)$(JAWS)MINW") {
+record (calc, "$(P)$(JAWS)MINW") {
     field(ASG, "$(ASG)")
-    field(SCAN, "1 second")
 	field(PINI, "1")
 	field(DESC, "Min in West Direction")
-	field(INP, "$(P)$(mXW).LLM")
+	field(INPA, "$(P)$(mXW).HLM CP")
+	field(CALC, "-1*A")
 }
 
 #  do not PINI or autosave - underlying motor record will do this
@@ -72,10 +70,6 @@ record(transform, "$(P)$(JAWS)ABLEGET") {
   field(INPB, "$(P)$(mXS)_able NPP MS")
   field(INPC, "$(P)$(mXE)_able NPP MS")
   field(INPD, "$(P)$(mXW)_able NPP MS")
-#  field(INPA, "$(P)$(mXN).DISA NPP MS")
-#  field(INPB, "$(P)$(mXS).DISA NPP MS")
-#  field(INPC, "$(P)$(mXE).DISA NPP MS")
-#  field(INPD, "$(P)$(mXW).DISA NPP MS")
   field(CLCE, "a+b+c+d")
   field(CLCF, "(e = 0) ? 0 : (e = 4 ? 1 : 2)")
   field(CMTE, "Count of disabled motors")
@@ -125,12 +119,5 @@ record(transform, "$(P)$(JAWS)LOCKGET") {
   field(CLCE, "a+b+c+d")
   field(CMTE, "Count of locked motors")
   field(CLCF, "(e = 0) ? 0 : (e = 4 ? 1 : 2)")
-#  field(INPA, "$(P)$(mXN).SPMG NPP MS")
-#  field(INPB, "$(P)$(mXS).SPMG NPP MS")
-#  field(INPC, "$(P)$(mXE).SPMG NPP MS")
-#  field(INPD, "$(P)$(mXW).SPMG NPP MS")
-#  field(CLCE, "a+b+c+d")
-#  field(CMTE, "Sum of SPMG values")
-#  field(CLCF, "(e = 0) ? 1 : (e = 12 ? 0 : 2)")
   field(CMTF, "unlocked,locked,unknown")
 }
