@@ -4,6 +4,7 @@ CALC=$(SUPPORT)/calc/master
 CAPUTLOG=$(SUPPORT)/caPutLog/master
 DEVIOCSTATS=$(SUPPORT)/devIocStats/master
 ICPCONFIG=$(SUPPORT)/icpconfig/master
+JAWS=$(SUPPORT)/jaws/master
 MOTOR=$(SUPPORT)/motor/master
 MOTOREXT=$(SUPPORT)/motorExtensions/master
 MYSQL=$(SUPPORT)/MySQL/master
