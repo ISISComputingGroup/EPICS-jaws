@@ -67,6 +67,8 @@ record (transform, "$(P)$(SLIT)$(S1)$(S2)INIT")
 	field(CLCB, "F*I")
 	field(OUTA, "$(P)$(SLIT)$(S1)_SPALT.A NPP NMS")
 	field(OUTB, "$(P)$(SLIT)$(S1)_SPALT.B PP NMS")
+    field(OUTE, "$(P)$(SLIT)$(S1)SYNC.A NPP NMS")
+    field(OUTF, "$(P)$(SLIT)$(S2)SYNC.A NPP NMS")
 	field(PREC, "3")
 	field(CMTA, "$(D1) Value")
 	field(CMTB, "$(D2) Value")
@@ -75,24 +77,34 @@ record (transform, "$(P)$(SLIT)$(S1)$(S2)INIT")
 }
 
 ## sync changes in low level motor setpoints 
-## back to top level jaw setpoints
-record (transform, "$(P)$(SLIT)$(S1)$(S2)SYNC")
+## back to top level jaw setpoints for S1
+record(calcout, "$(P)$(SLIT)$(S1)SYNC")
 {
     field(ASG, "$(ASG)")
 	field(DESC, "Motor Sync")
-    field(COPT, "Always")
-	field(INPE, "$(P)$(M1).VAL CP NMS")
-	field(INPF, "$(P)$(M2).VAL CP NMS")
-	field(INPI, "$(P)$(SLIT)$(S1)_SWMULT.VAL")
-	field(CLCA, "E")
-	field(CLCB, "F*I")
-	field(OUTA, "$(P)$(SLIT)$(S1)_SPALT.A NPP NMS")
-	field(OUTB, "$(P)$(SLIT)$(S1)_SPALT.B PP NMS")
+	field(INPA, "$(P)$(M1).VAL CP NMS")
+	field(INPB, "$(P)$(SLIT)$(S1)_SWMULT.VAL")
+	field(CALC, "A")
+	field(OUT, "$(P)$(SLIT)$(S1)_SPALT.A PP NMS")
 	field(PREC, "3")
-	field(CMTA, "$(D1) Value")
-	field(CMTB, "$(D2) Value")
-	field(CMTE, "Current $(M1) Value")
-	field(CMTF, "Current $(M2) Value")
+	field(OOPT, "On Change")
+	# use SDIS to disable processing if SPALT is active i.e. the
+	# low level change has been caused by a high level change
+	field(SDIS, "$(P)$(SLIT)$(S1)_SPALT.PACT")
+}
+
+## sync changes in low level motor setpoints 
+## back to top level jaw setpoints for S2
+record(calcout, "$(P)$(SLIT)$(S2)SYNC")
+{
+    field(ASG, "$(ASG)")
+	field(DESC, "Motor Sync")
+	field(INPA, "$(P)$(M2).VAL CP NMS")
+	field(INPB, "$(P)$(SLIT)$(S1)_SWMULT.VAL")
+	field(CALC, "A*B")
+	field(OUT, "$(P)$(SLIT)$(S1)_SPALT.B PP NMS")
+	field(PREC, "3")
+	field(OOPT, "On Change")
 	# use SDIS to disable processing if SPALT is active i.e. the
 	# low level change has been caused by a high level change
 	field(SDIS, "$(P)$(SLIT)$(S1)_SPALT.PACT")
