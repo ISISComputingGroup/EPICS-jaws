@@ -13,6 +13,8 @@ include $(TOP)/configure/CONFIG
 #DB += xxx.db
 DB += jaws.db
 DB += jaws_vertical.db
+DB += split_jaws_header_vertical.db
+DB += split_jaws_horizontal.db
 
 #----------------------------------------------------
 # If <anyname>.db template is not named <anyname>*.template add

@@ -1,0 +1,8 @@
+file "$(JAWS)/jawsApp/Db/jawsheader.template" {
+    { P=\$(P), JAWS=\$(JAWS), mXN=\$(mXN), mXS=\$(mXS), mXE=\$(mXE), mXW=\$(mXW), ASG=\$(ASG=DEFAULT) }
+}
+
+file "$(JAWS)/jawsApp/Db/slits.template" {
+    { P=\$(P), SLIT=\$(JAWS), M1=\$(mXN), M2=\$(mXS), S1=JN, S2=JS, D1=North, D2=South, GAP=VGAP, DGAP=Vertical, CENTRE=VCENT, DCENTRE=Vertical, ASG=\$(ASG=DEFAULT), EGU=\$(EGU=), CENT_DISP=\$(CENT_DISP=0) }
+}
+
