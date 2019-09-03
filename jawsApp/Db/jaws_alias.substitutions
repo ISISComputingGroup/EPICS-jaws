@@ -1,0 +1,17 @@
+# Creates a .db file with alias records for one full standard set of jaws where the centres/gaps are calculated outside of EPICS.
+
+file "$(JAWS)/jawsApp/Db/jawsheader.template" {
+    { P=\$(P), JAWS=\$(JAWS), mXN=\$(mXN), mXS=\$(mXS), mXE=\$(mXE), mXW=\$(mXW), ASG=\$(ASG=DEFAULT) }
+}
+
+file "$(JAWS)/jawsApp/Db/alias.template" {
+    { P=\$(P), SLIT=\$(JAWS), MOTOR=\$(mXN), JAW_AXIS=JN, EGU=\$(EGU=) }
+    { P=\$(P), SLIT=\$(JAWS), MOTOR=\$(mXS), JAW_AXIS=JS, EGU=\$(EGU=) }
+    { P=\$(P), SLIT=\$(JAWS), MOTOR=\$(mXE), JAW_AXIS=JE, EGU=\$(EGU=) }
+    { P=\$(P), SLIT=\$(JAWS), MOTOR=\$(mXW), JAW_AXIS=JW, EGU=\$(EGU=) }
+    { P=\$(P), SLIT=\$(JAWS), MOTOR=\$(mVCENT), JAW_AXIS=VCENT, EGU=\$(EGU=) }
+    { P=\$(P), SLIT=\$(JAWS), MOTOR=\$(mVGAP), JAW_AXIS=VGAP, EGU=\$(EGU=) }
+    { P=\$(P), SLIT=\$(JAWS), MOTOR=\$(mHCENT), JAW_AXIS=HCENT, EGU=\$(EGU=) }
+    { P=\$(P), SLIT=\$(JAWS), MOTOR=\$(mHGAP), JAW_AXIS=HGAP, EGU=\$(EGU=) }
+}
+

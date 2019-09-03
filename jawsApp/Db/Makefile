@@ -13,6 +13,7 @@ include $(TOP)/configure/CONFIG
 #DB += xxx.db
 DB += jaws.db
 DB += jaws_vertical.db
+DB += jaws_alias.db
 DB += split_jaws_header_vertical.db
 DB += split_jaws_horizontal.db
 

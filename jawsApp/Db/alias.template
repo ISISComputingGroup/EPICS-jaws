@@ -1,0 +1,22 @@
+# Creates aliases for all the normal jaw records for when the centres/gaps are actually described by real motor records
+
+record (ai, "$(P)$(SLIT)$(JAW_AXIS)") 
+{
+	field(DESC, "Current $(JAW_AXIS) position")
+	field(PREC, "3")
+	field(EGU, "$(EGU)")
+	field(INP, "$(P)$(MOTOR).RBV CP")
+    info(archive, "0.1 VAL")
+    info(INTEREST, "HIGH")
+}
+
+record (bi, "$(P)$(SLIT)$(JAW_AXIS):DMOV") 
+{
+	field(DESC, "True if $(JAW_AXIS) done moving")
+	field(INP, "$(P)$(MOTOR).DMOV CP")
+    info(INTEREST, "HIGH")
+}
+
+alias("$(P)$(MOTOR)", "$(P)$(SLIT)$(JAW_AXIS):SP")
+alias("$(P)$(SLIT)$(JAW_AXIS):SP", "$(P)$(SLIT)$(JAW_AXIS):SP:RBV")
+alias("$(P)$(MOTOR)", "$(P)$(SLIT)$(JAW_AXIS):MTR")
