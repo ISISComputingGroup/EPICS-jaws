@@ -6,3 +6,12 @@ file "$(JAWS)/jawsApp/Db/slits.template" {
     { P=\$(P), SLIT=\$(JAWS), M1=\$(mXE), M2=\$(mXW), S1=JE, S2=JW, D1=East, D2=West, GAP=HGAP, DGAP=Horizontal, CENTRE=HCENT, DCENTRE=Horizontal, ASG=\$(ASG=DEFAULT), EGU=\$(EGU=), CENT_DISP=\$(CENT_DISP=0) }
 }
 
+file "$(UTILITIES)/utilitiesApp/db/field_setter.template" {
+    {P=\$(P), TO=\$(JAWS)JE, FROM=\$(mXE), FIELD=ADEL}
+    {P=\$(P), TO=\$(JAWS)JW, FROM=\$(mXW), FIELD=ADEL}
+
+    {P=\$(P), TO=\$(JAWS)HGAP, FROM=\$(mXE), FIELD=ADEL}
+
+    {P=\$(P), TO=\$(JAWS)HCENT, FROM=\$(mXE), FIELD=ADEL}
+
+}

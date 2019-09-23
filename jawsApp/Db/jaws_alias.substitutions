@@ -15,3 +15,15 @@ file "$(JAWS)/jawsApp/Db/alias.template" {
     { P=\$(P), SLIT=\$(JAWS), MOTOR=\$(mHGAP), JAW_AXIS=HGAP, EGU=\$(EGU=) }
 }
 
+file "$(UTILITIES)/utilitiesApp/db/field_setter.template" {
+    {P=\$(P), TO=\$(JAWS)JN, FROM=\$(mXN), FIELD=ADEL}
+    {P=\$(P), TO=\$(JAWS)JE, FROM=\$(mXE), FIELD=ADEL}
+    {P=\$(P), TO=\$(JAWS)JS, FROM=\$(mXS), FIELD=ADEL}
+    {P=\$(P), TO=\$(JAWS)JW, FROM=\$(mXW), FIELD=ADEL}
+
+    {P=\$(P), TO=\$(JAWS)VGAP, FROM=\$(mXN), FIELD=ADEL}
+    {P=\$(P), TO=\$(JAWS)HGAP, FROM=\$(mXE), FIELD=ADEL}
+
+    {P=\$(P), TO=\$(JAWS)VCENT, FROM=\$(mXN), FIELD=ADEL}
+    {P=\$(P), TO=\$(JAWS)HCENT, FROM=\$(mXE), FIELD=ADEL}
+}
