@@ -8,7 +8,7 @@ file "$(JAWS)/jawsApp/Db/slits.template" {
     { P=\$(P), SLIT=\$(JAWS), M1=\$(mXN), M2=\$(mXS), S1=JN, S2=JS, D1=North, D2=South, GAP=VGAP, DGAP=Vertical, CENTRE=VCENT, DCENTRE=Vertical, ASG=\$(ASG=DEFAULT), EGU=\$(EGU=), CENT_DISP=\$(CENT_DISP=0) }
 }
 
-file "$(UTILITIES)/utilitiesApp/db/field_setter.template" {
+file "$(UTILITIES)/utilitiesApp/Db/field_setter.template" {
     {P=\$(P), TO=\$(JAWS)JN, FROM=\$(mXN), FIELD=ADEL}
     {P=\$(P), TO=\$(JAWS)JS, FROM=\$(mXS), FIELD=ADEL}
 
