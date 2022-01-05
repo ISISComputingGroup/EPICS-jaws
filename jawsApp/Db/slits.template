@@ -1,5 +1,6 @@
 # S1 is North, or East Jaw/slit
 # S2 is South or West Jaw/slit
+# NSMOOTH is how many points to smooth readbacks over (default=1), only set > 1 if have noisy readback
 
 # coordinate system is cartesian for jaws, but motors may be defined
 # such that motion away from centre is always positive. This is controlled
@@ -344,7 +345,11 @@ record(stringin, "$(P)$(SLIT)$(S2):MOTOR") {
 alias("$(P)$(M1)", "$(P)$(SLIT)$(S1):MTR")
 alias("$(P)$(M2)", "$(P)$(SLIT)$(S2):MTR")
 
-## to allow smoothing of readbacks on $(S1)
+## to allow smoothing of readbacks
+## this assumes the readback is constantly changing and so will trigger CP
+## do not set NSMOOTH > 1 unless you have noisy readbacks
+
+## smooth $(S1)
 record(compress, "$(P)$(SLIT)$(S1):SMTH1")
 {
     field(ALG, "Circular Buffer")
@@ -362,7 +367,7 @@ record(compress, "$(P)$(SLIT)$(S1):SMTH")
 	field(N, "$(NSMOOTH=1)")
 }
 
-## to allow smoothing of readbacks on $(S2)
+## smooth $(S2)
 record(compress, "$(P)$(SLIT)$(S2):SMTH1")
 {
     field(ALG, "Circular Buffer")
