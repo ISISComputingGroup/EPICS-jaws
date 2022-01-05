@@ -353,34 +353,34 @@ alias("$(P)$(M2)", "$(P)$(SLIT)$(S2):MTR")
 record(compress, "$(P)$(SLIT)$(S1):SMTH1")
 {
     field(ALG, "Circular Buffer")
-	field(INP, "$(P)$(M1).RBV CP MS")
-	field(NSAM, "$(NSMOOTH=1)")
-	field(FLNK, "$(P)$(SLIT)$(S1):SMTH.PROC")
+    field(INP, "$(P)$(M1).RBV CP MS")
+    field(NSAM, "$(NSMOOTH=1)")
+    field(FLNK, "$(P)$(SLIT)$(S1):SMTH.PROC")
 }
 
 ## use to replace $(P)$(M1).RBV references
 record(compress, "$(P)$(SLIT)$(S1):SMTH")
 {
     field(ALG, "N to 1 Average")
-	field(INP, "$(P)$(SLIT)$(S1):SMTH1.VAL NPP MS")
-	field(NSAM, "1")
-	field(N, "$(NSMOOTH=1)")
+    field(INP, "$(P)$(SLIT)$(S1):SMTH1.VAL NPP MS")
+    field(NSAM, "1")
+    field(N, "$(NSMOOTH=1)")
 }
 
 ## smooth $(S2)
 record(compress, "$(P)$(SLIT)$(S2):SMTH1")
 {
     field(ALG, "Circular Buffer")
-	field(INP, "$(P)$(M2).RBV CP MS")
-	field(NSAM, "$(NSMOOTH=1)")
-	field(FLNK, "$(P)$(SLIT)$(S2):SMTH.PROC")
+    field(INP, "$(P)$(M2).RBV CP MS")
+    field(NSAM, "$(NSMOOTH=1)")
+    field(FLNK, "$(P)$(SLIT)$(S2):SMTH.PROC")
 }
 
 ## use to replace $(P)$(M2).RBV references
 record(compress, "$(P)$(SLIT)$(S2):SMTH")
 {
     field(ALG, "N to 1 Average")
-	field(INP, "$(P)$(SLIT)$(S2):SMTH1.VAL NPP MS")
-	field(NSAM, "1")
-	field(N, "$(NSMOOTH=1)")
+    field(INP, "$(P)$(SLIT)$(S2):SMTH1.VAL NPP MS")
+    field(NSAM, "1")
+    field(N, "$(NSMOOTH=1)")
 }
