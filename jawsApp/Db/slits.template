@@ -232,8 +232,8 @@ record (transform, "$(P)$(SLIT)$(S1)$(S2)_RBALT"){
 	field(DESC, "Motor Value to Jaws Value")
     field(COPT, "Always")
 	field(SCAN, ".1 second")
-	field(INPE, "$(P)$(M1).RBV NPP MS")
-	field(INPF, "$(P)$(M2).RBV NPP MS")
+	field(INPE, "$(P)$(SLIT)$(S1):SMTH.VAL NPP MS")
+	field(INPF, "$(P)$(SLIT)$(S2):SMTH.VAL NPP MS")
 	field(INPI, "$(P)$(SLIT)$(S1)_SWMULT.VAL")
 	field(CLCA, "E")
 	field(CLCB, "F*I")
@@ -273,7 +273,7 @@ record (transform, "$(P)$(SLIT)$(S1)_ALARM"){
 	field(DESC, "Propagates the alarm from the motor")
     field(COPT, "Always")
 	field(INPE, "$(P)$(SLIT)$(S1)_INTMED.VAL NPP NMS")
-	field(INPF, "$(P)$(M1).RBV NPP MS")
+	field(INPF, "$(P)$(SLIT)$(S1):SMTH.VAL NPP MS")
 	field(CLCB, "E")
 	field(OUTB, "$(P)$(SLIT)$(S1).VAL PP MS")
 	field(PREC, "3")
@@ -288,7 +288,7 @@ record (transform, "$(P)$(SLIT)$(S2)_ALARM"){
 	field(DESC, "Propagates the alarm from the motor")
     field(COPT, "Always")
 	field(INPE, "$(P)$(SLIT)$(S2)_INTMED.VAL NPP NMS")
-	field(INPF, "$(P)$(M2).RBV NPP MS")
+	field(INPF, "$(P)$(SLIT)$(S2):SMTH.VAL NPP MS")
 	field(CLCB, "E")
 	field(OUTB, "$(P)$(SLIT)$(S2).VAL PP MS")
 	field(PREC, "3")
@@ -344,3 +344,38 @@ record(stringin, "$(P)$(SLIT)$(S2):MOTOR") {
 alias("$(P)$(M1)", "$(P)$(SLIT)$(S1):MTR")
 alias("$(P)$(M2)", "$(P)$(SLIT)$(S2):MTR")
 
+## to allow smoothing of readbacks on $(S1)
+record(compress, "$(P)$(SLIT)$(S1):SMTH1")
+{
+    field(ALG, "Circular Buffer")
+	field(INP, "$(P)$(M1).RBV CP MS")
+	field(NSAM, "$(NSMOOTH=1)")
+	field(FLNK, "$(P)$(SLIT)$(S1):SMTH.PROC")
+}
+
+## use to replace $(P)$(M1).RBV references
+record(compress, "$(P)$(SLIT)$(S1):SMTH")
+{
+    field(ALG, "N to 1 Average")
+	field(INP, "$(P)$(SLIT)$(S1):SMTH1.VAL NPP MS")
+	field(NSAM, "1")
+	field(N, "$(NSMOOTH=1)")
+}
+
+## to allow smoothing of readbacks on $(S2)
+record(compress, "$(P)$(SLIT)$(S2):SMTH1")
+{
+    field(ALG, "Circular Buffer")
+	field(INP, "$(P)$(M2).RBV CP MS")
+	field(NSAM, "$(NSMOOTH=1)")
+	field(FLNK, "$(P)$(SLIT)$(S2):SMTH.PROC")
+}
+
+## use to replace $(P)$(M2).RBV references
+record(compress, "$(P)$(SLIT)$(S2):SMTH")
+{
+    field(ALG, "N to 1 Average")
+	field(INP, "$(P)$(SLIT)$(S2):SMTH1.VAL NPP MS")
+	field(NSAM, "1")
+	field(N, "$(NSMOOTH=1)")
+}
