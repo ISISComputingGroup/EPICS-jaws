@@ -235,10 +235,13 @@ record(calcout, "$(P)$(SLIT)$(S1)$(M1)PUT")
     field(INPB, "$(P)$(SLIT)$(S1)$(S2)INIT.PACT")
     field(INPC, "$(P)$(SLIT)$(S1)SYNC.PACT")
     field(INPD, "$(P)$(SLIT)$(S2)SYNC.PACT")
+    field(INPE, "$(P)$(M1).LLM")
+    field(INPF, "$(P)$(M1).HLM")
     field(CALC, "B=0&&C=0&&D=0")
     field(OOPT, "When Non-zero")
     field(DOPT, "Use OCAL")
-    field(OCAL, "A")
+    # for value to within limits if LLM < HLM
+    field(OCAL, "E<F?(A<E?E:(A>F?F:A)):A")
     field(OUT, "$(P)$(M1).VAL PP MS")
 }
 
@@ -247,10 +250,13 @@ record(calcout, "$(P)$(SLIT)$(S2)$(M2)PUT")
     field(INPB, "$(P)$(SLIT)$(S1)$(S2)INIT.PACT")
     field(INPC, "$(P)$(SLIT)$(S1)SYNC.PACT")
     field(INPD, "$(P)$(SLIT)$(S2)SYNC.PACT")
+    field(INPE, "$(P)$(M2).LLM")
+    field(INPF, "$(P)$(M2).HLM")
     field(CALC, "B=0&&C=0&&D=0")
     field(OOPT, "When Non-zero")
     field(DOPT, "Use OCAL")
-    field(OCAL, "A")
+    # for value to within limits if LLM < HLM
+    field(OCAL, "E<F?(A<E?E:(A>F?F:A)):A")
     field(OUT, "$(P)$(M2).VAL PP MS")
 }
 
@@ -353,7 +359,6 @@ record (seq, "$(P)$(SLIT)$(S1)AMDEL") {
 	field(DOL8, "$(P)$(M1).MDEL NPP NMS")
 	field(LNK8, "$(P)$(SLIT)$(GAP).MDEL NPP NMS")
 }
-
 
 record(stringin, "$(P)$(SLIT)$(S1):MOTOR") {
     field(ASG, "$(ASG)")
