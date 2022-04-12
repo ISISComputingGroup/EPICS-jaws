@@ -11,6 +11,7 @@ record (ao, "$(P)$(SLIT)$(S1):SP")
 	field(OUT, "$(P)$(SLIT)$(S1)_SPALT.A PP MS")
 	field(PREC, "3")
 	field(EGU, "$(EGU)")
+    field(SDIS, "$(P)$(SLIT)$(S1)$(S2)INIT.PACT")
     info(archive, "VAL")
     info(INTEREST, "HIGH")
 }
@@ -23,6 +24,7 @@ record (ao, "$(P)$(SLIT)$(S2):SP")
 	field(OUT, "$(P)$(SLIT)$(S1)_SPALT.B PP MS")
 	field(PREC, "3")
 	field(EGU, "$(EGU)")
+    field(SDIS, "$(P)$(SLIT)$(S1)$(S2)INIT.PACT")
     info(archive, "VAL")
     info(INTEREST, "HIGH")
 }
@@ -35,6 +37,7 @@ record (ao, "$(P)$(SLIT)$(GAP):SP")
 	field(OUT, "$(P)$(SLIT)$(S1)_SPALT.C PP MS")
 	field(PREC, "3")
 	field(EGU, "$(EGU)")
+    field(SDIS, "$(P)$(SLIT)$(S1)$(S2)INIT.PACT")
     info(archive, "VAL")
     info(INTEREST, "HIGH")
 }
@@ -48,6 +51,7 @@ record (ao, "$(P)$(SLIT)$(CENTRE):SP")
 	field(PREC, "3")
 	field(EGU, "$(EGU)")
 	field(DISP, "$(CENT_DISP)")
+    field(SDIS, "$(P)$(SLIT)$(S1)$(S2)INIT.PACT")
     info(archive, "VAL")
     info(INTEREST, "HIGH")
 }
@@ -215,8 +219,8 @@ record (transform, "$(P)$(SLIT)$(S1)_SPALT")
 	field(OUTB, "$(P)$(SLIT)$(S2):BPUT.VAL PP MS")
 	field(OUTC, "$(P)$(SLIT)$(GAP):BPUT.VAL PP MS")
 	field(OUTD, "$(P)$(SLIT)$(CENTRE):BPUT.VAL PP MS")
-	field(OUTE, "$(P)$(M1).VAL PP MS")
-	field(OUTF, "$(P)$(M2).VAL PP MS")
+	field(OUTE, "$(P)$(SLIT)$(S1)$(M1)PUT.A PP MS")
+	field(OUTF, "$(P)$(SLIT)$(S2)$(M2)PUT.A PP MS")
 	field(PREC, "3")
 	field(CMTA, "Calculated $(D1) Value")
 	field(CMTB, "Calculated $(D2) Value")
@@ -224,6 +228,36 @@ record (transform, "$(P)$(SLIT)$(S1)_SPALT")
 	field(CMTD, "Calculated $(DCENTRE) Value")
 	field(CMTE, "Calculated $(M1) Value")
 	field(CMTF, "Calculated $(M2) Value")
+}
+
+record(calcout, "$(P)$(SLIT)$(S1)$(M1)PUT")
+{
+    field(INPB, "$(P)$(SLIT)$(S1)$(S2)INIT.PACT")
+    field(INPC, "$(P)$(SLIT)$(S1)SYNC.PACT")
+    field(INPD, "$(P)$(SLIT)$(S2)SYNC.PACT")
+    field(INPE, "$(P)$(M1).LLM")
+    field(INPF, "$(P)$(M1).HLM")
+    field(CALC, "B=0&&C=0&&D=0")
+    field(OOPT, "When Non-zero")
+    field(DOPT, "Use OCAL")
+    # for value to within limits if LLM < HLM
+    field(OCAL, "E<F?(A<E?E:(A>F?F:A)):A")
+    field(OUT, "$(P)$(M1).VAL PP MS")
+}
+
+record(calcout, "$(P)$(SLIT)$(S2)$(M2)PUT")
+{
+    field(INPB, "$(P)$(SLIT)$(S1)$(S2)INIT.PACT")
+    field(INPC, "$(P)$(SLIT)$(S1)SYNC.PACT")
+    field(INPD, "$(P)$(SLIT)$(S2)SYNC.PACT")
+    field(INPE, "$(P)$(M2).LLM")
+    field(INPF, "$(P)$(M2).HLM")
+    field(CALC, "B=0&&C=0&&D=0")
+    field(OOPT, "When Non-zero")
+    field(DOPT, "Use OCAL")
+    # for value to within limits if LLM < HLM
+    field(OCAL, "E<F?(A<E?E:(A>F?F:A)):A")
+    field(OUT, "$(P)$(M2).VAL PP MS")
 }
 
 # This record also puts the GAP and CENTRE into alarm, but not the axes themselves
@@ -325,7 +359,6 @@ record (seq, "$(P)$(SLIT)$(S1)AMDEL") {
 	field(DOL8, "$(P)$(M1).MDEL NPP NMS")
 	field(LNK8, "$(P)$(SLIT)$(GAP).MDEL NPP NMS")
 }
-
 
 record(stringin, "$(P)$(SLIT)$(S1):MOTOR") {
     field(ASG, "$(ASG)")
