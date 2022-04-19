@@ -237,11 +237,13 @@ record(calcout, "$(P)$(SLIT)$(S1)$(M1)PUT")
     field(INPD, "$(P)$(SLIT)$(S2)SYNC.PACT")
     field(INPE, "$(P)$(M1).LLM")
     field(INPF, "$(P)$(M1).HLM")
+    field(INPG, "$(P)$(M1).MRES")
     field(CALC, "B=0&&C=0&&D=0")
     field(OOPT, "When Non-zero")
     field(DOPT, "Use OCAL")
-    # for value to within limits if LLM < HLM
-    field(OCAL, "E<F?(A<E?E:(A>F?F:A)):A")
+    # force value to within limits if LLM < HLM
+    # but offset by a motor step to avoid rounding error
+    field(OCAL, "E<F?(A<=E?(E+G):(A>=F?(F-G):A)):A")
     field(OUT, "$(P)$(M1).VAL PP MS")
 }
 
@@ -252,11 +254,13 @@ record(calcout, "$(P)$(SLIT)$(S2)$(M2)PUT")
     field(INPD, "$(P)$(SLIT)$(S2)SYNC.PACT")
     field(INPE, "$(P)$(M2).LLM")
     field(INPF, "$(P)$(M2).HLM")
+    field(INPG, "$(P)$(M2).MRES")
     field(CALC, "B=0&&C=0&&D=0")
     field(OOPT, "When Non-zero")
     field(DOPT, "Use OCAL")
-    # for value to within limits if LLM < HLM
-    field(OCAL, "E<F?(A<E?E:(A>F?F:A)):A")
+    # force value to within limits if LLM < HLM
+    # but offset by a motor step to avoid rounding error
+    field(OCAL, "E<F?(A<=E?(E+G):(A>=F?(F-G):A)):A")
     field(OUT, "$(P)$(M2).VAL PP MS")
 }
 
