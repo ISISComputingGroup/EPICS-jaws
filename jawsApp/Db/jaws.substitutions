@@ -1,7 +1,7 @@
 # Creates a .db file with records for one full standard set of jaws.
 
 file "$(JAWS)/jawsApp/Db/jawsheader.template" {
-    { P=\$(P), JAWS=\$(JAWS), mXN=\$(mXN), mXS=\$(mXS), mXE=\$(mXE), mXW=\$(mXW), ASG=\$(ASG=DEFAULT) }
+    { P=\$(P), JAWS=\$(JAWS), mXN=\$(mXN), mXS=\$(mXS), mXE=\$(mXE), mXW=\$(mXW), ASG=\$(ASG=DEFAULT), SLIT1=\$(JAWS), CENTRE1=VCENT, SLIT2=\$(JAWS), CENTRE2=HCENT }
 }
 
 file "$(JAWS)/jawsApp/Db/slits.template" {

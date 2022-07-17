@@ -1,3 +1,20 @@
+record (bo, "$(P)$(JAWS)CENTRE:FIX:SP")
+{
+    field(ASG, "$(ASG)")
+	field(DESC, "Fix $(JAWS) Centre Setpoint")
+	field(ZNAM, "No")
+	field(ONAM, "Yes")
+	field(OUT, "$(P)$(JAWS)CENTRE:FIX:FAN PP")
+	field(PINI, "YES")
+    info(archive, "VAL")
+    info(autosaveFields, "VAL")
+}
+
+record(dfanout, "$(P)$(JAWS)CENTRE:FIX:FAN")
+{
+    field(OUTA, "$(P)$(SLIT1)$(CENTRE1):FIX:SP PP")
+    field(OUTB, "$(P)$(SLIT2)$(CENTRE2):FIX:SP PP")
+}	
 
 record (ai, "$(P)$(JAWS)MAXN") {
     field(ASG, "$(ASG)")

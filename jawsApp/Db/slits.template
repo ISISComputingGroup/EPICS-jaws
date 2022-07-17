@@ -1,6 +1,20 @@
 # S1 is North, or East Jaw/slit
 # S2 is South or West Jaw/slit
 
+# should the position of the centre be fixed i.e.
+# changing one blade does not shift centre SP
+# this is to preserve centre :sp in case one axis stalls
+# so that a future set is then correct. Used in _SPALT 
+record (bo, "$(P)$(SLIT)$(CENTRE):FIX:SP")
+{
+    field(ASG, "$(ASG)")
+	field(DESC, "Fix $(DCENTRE) Setpoint")
+	field(ZNAM, "No")
+	field(ONAM, "Yes")	
+    info(archive, "VAL")
+    info(autosaveFields, "VAL")
+}
+
 # coordinate system is cartesian for jaws, but motors may be defined
 # such that motion away from centre is always positive. This is controlled
 # by the SWMULT variable
@@ -53,6 +67,7 @@ record (ao, "$(P)$(SLIT)$(CENTRE):SP")
 	field(DISP, "$(CENT_DISP)")
     field(SDIS, "$(P)$(SLIT)$(S1)$(S2)INIT.PACT")
     info(archive, "VAL")
+    info(autosaveFields, "VAL")
     info(INTEREST, "HIGH")
 }
 alias("$(P)$(SLIT)$(CENTRE):SP", "$(P)$(SLIT)$(CENTRE):SP:RBV")
@@ -212,9 +227,11 @@ record (transform, "$(P)$(SLIT)$(S1)_SPALT")
 	field(CLCA, "(D+C/2)")
 	field(CLCB, "(D-C/2)")
 	field(CLCC, "(A-B)")
-	field(CLCD, "(A+B)/2")
+	field(CLCD, "G=1?H:(A+B)/2")
 	field(CLCE, "A")
 	field(CLCF, "B*I")
+	field(INPG, "$(P)$(SLIT)$(CENTRE):FIX:SP")
+	field(INPH, "$(P)$(SLIT)$(CENTRE):SP")
 	field(OUTA, "$(P)$(SLIT)$(S1):BPUT.VAL PP MS")
 	field(OUTB, "$(P)$(SLIT)$(S2):BPUT.VAL PP MS")
 	field(OUTC, "$(P)$(SLIT)$(GAP):BPUT.VAL PP MS")
