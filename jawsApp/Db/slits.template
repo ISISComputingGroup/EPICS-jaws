@@ -81,27 +81,27 @@ record (transform, "$(P)$(SLIT)$(S1)$(S2)INIT")
 record(ao, "$(P)$(SLIT)$(S1):BPUT") 
 {
   field(ASG, "$(ASG)")
-  field(SDIS, "$(P)$(SLIT)$(S1):SP.PACT")
+  field(SDIS, "$(P)$(SLIT)$(S1):SP.PACT  NPP NMS")
   field(OUT, "$(P)$(SLIT)$(S1):SP.VAL PP MS")
 }
 
 record(ao, "$(P)$(SLIT)$(S2):BPUT") 
 {
   field(ASG, "$(ASG)")
-  field(SDIS, "$(P)$(SLIT)$(S2):SP.PACT")
+  field(SDIS, "$(P)$(SLIT)$(S2):SP.PACT  NPP NMS")
   field(OUT, "$(P)$(SLIT)$(S2):SP.VAL PP MS")
 }
 
 record(ao, "$(P)$(SLIT)$(GAP):BPUT") 
 {
   field(ASG, "$(ASG)")
-  field(SDIS, "$(P)$(SLIT)$(GAP):SP.PACT")
+  field(SDIS, "$(P)$(SLIT)$(GAP):SP.PACT  NPP NMS")
   field(OUT, "$(P)$(SLIT)$(GAP):SP.VAL  PP MS")
 }
 
 record(ao, "$(P)$(SLIT)$(CENTRE):BPUT") {
   field(ASG, "$(ASG)")
-  field(SDIS, "$(P)$(SLIT)$(CENTRE):SP.PACT")
+  field(SDIS, "$(P)$(SLIT)$(CENTRE):SP.PACT  NPP NMS")
   field(OUT, "$(P)$(SLIT)$(CENTRE):SP.VAL  PP MS")
 }
 
