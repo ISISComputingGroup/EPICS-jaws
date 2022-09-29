@@ -69,7 +69,6 @@ alias("$(P)$(SLIT)$(CENTRE):SP", "$(P)$(SLIT)$(CENTRE):SP:RBV")
 ## use autosave value from S1 and S2 by specifying macro IFINIT_FROM_AS
 ## this does not send the SP to the motor and move it, but 
 ## sets the last requested SP that will be used in future calculations
-## which can stop e.g. gap or centre drift
 record (transform, "$(P)$(SLIT)$(S1)$(S2)INIT")
 {
     field(ASG, "$(ASG)")
