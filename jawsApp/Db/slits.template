@@ -5,7 +5,10 @@
 # such that motion away from centre is always positive. This is controlled
 # by the SWMULT variable
 # we autosave but do not PINI, the value may be used depending on
-# IFINIT_FROM_AS macro used in INIT routine later
+# IFINIT_FROM_AS macro used in INIT routine later i.e. we can choose
+# if we initialise last SP to motor RBV or previous jaws SP (this
+# does not sent the setpoint, but it will be used as part of future move
+# calculations)
 record (ao, "$(P)$(SLIT)$(S1):SP")
 {
     field(ASG, "$(ASG)")
@@ -63,7 +66,10 @@ alias("$(P)$(SLIT)$(CENTRE):SP", "$(P)$(SLIT)$(CENTRE):SP:RBV")
 
 ## set preferred SPALT values on init
 ## default is to sync SP from motor RBV, but can also
-## use autosave value from S1 and S2 by specifying macro
+## use autosave value from S1 and S2 by specifying macro IFINIT_FROM_AS
+## this does not send the SP to the motor and move it, but 
+## sets the last requested SP that will be used in future calculations
+## which can stop e.g. gap or centre drift
 record (transform, "$(P)$(SLIT)$(S1)$(S2)INIT")
 {
     field(ASG, "$(ASG)")
