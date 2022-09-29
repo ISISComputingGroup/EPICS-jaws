@@ -4,6 +4,8 @@
 # coordinate system is cartesian for jaws, but motors may be defined
 # such that motion away from centre is always positive. This is controlled
 # by the SWMULT variable
+# we autosave but do not PINI, the value may be used depending on
+# IFINIT_FROM_AS macro used in INIT routine later
 record (ao, "$(P)$(SLIT)$(S1):SP")
 {
     field(ASG, "$(ASG)")
@@ -13,6 +15,7 @@ record (ao, "$(P)$(SLIT)$(S1):SP")
 	field(EGU, "$(EGU)")
     field(SDIS, "$(P)$(SLIT)$(S1)$(S2)INIT.PACT")
     info(archive, "VAL")
+    info(autosaveFields, "VAL")
     info(INTEREST, "HIGH")
 }
 alias("$(P)$(SLIT)$(S1):SP", "$(P)$(SLIT)$(S1):SP:RBV")
@@ -26,6 +29,7 @@ record (ao, "$(P)$(SLIT)$(S2):SP")
 	field(EGU, "$(EGU)")
     field(SDIS, "$(P)$(SLIT)$(S1)$(S2)INIT.PACT")
     info(archive, "VAL")
+    info(autosaveFields, "VAL")
     info(INTEREST, "HIGH")
 }
 alias("$(P)$(SLIT)$(S2):SP", "$(P)$(SLIT)$(S2):SP:RBV")
@@ -57,15 +61,19 @@ record (ao, "$(P)$(SLIT)$(CENTRE):SP")
 }
 alias("$(P)$(SLIT)$(CENTRE):SP", "$(P)$(SLIT)$(CENTRE):SP:RBV")
 
-# set correct SPALT values on init
+## set preferred SPALT values on init
+## default is to sync SP from motor RBV, but can also
+## use autosave value from S1 and S2 by specifying macro
 record (transform, "$(P)$(SLIT)$(S1)$(S2)INIT")
 {
     field(ASG, "$(ASG)")
 	field(DESC, "Motor Value Init")
     field(COPT, "Always")
     field(PINI, "YES")
-	field(INPE, "$(P)$(M1).VAL NPP NMS")
-	field(INPF, "$(P)$(M2).VAL NPP NMS")
+$(IFINIT_FROM_AS=#)    field(INPE, "$(P)$(SLIT)$(S1):SP NPP NMS")
+$(IFINIT_FROM_AS=#)    field(INPF, "$(P)$(SLIT)$(S2):SP NPP NMS")
+$(IFNOTINIT_FROM_AS=)  field(INPE, "$(P)$(M1).VAL NPP NMS")
+$(IFNOTINIT_FROM_AS=)  field(INPF, "$(P)$(M2).VAL NPP NMS")
 	field(INPI, "$(P)$(SLIT)$(S1)_SWMULT.VAL")
 	field(CLCA, "E")
 	field(CLCB, "F*I")
@@ -117,6 +125,34 @@ record (ai, "$(P)$(SLIT)$(S1)")
 # Add alias to expose the underlying DMOV
 alias("$(P)$(M1):DMOV", "$(P)$(SLIT)$(S1):DMOV")
 
+record (calc, "$(P)$(SLIT)$(S1):DIFF")
+{
+    field(ASG, "$(ASG)")
+	field(DESC, "Current $(D1) SP-RBV")
+	field(INPA, "$(P)$(SLIT)$(S1):SP CP")
+	field(INPB, "$(P)$(SLIT)$(S1) CP")
+	field(CALC, "A-B")
+	field(PREC, "3")
+	field(EGU, "$(EGU)")
+}
+
+## 1 if move finished and not in tolerance, 0 otherwise
+## Goes into HIGH alarm on position error
+record (calc, "$(P)$(SLIT)$(S1):POSERR")
+{
+	field(ASG, "$(ASG)")
+	field(DESC, "$(D1) pos within tol")
+	field(INPA, "$(P)$(SLIT)$(S1):DIFF CP")
+	field(INPB, "$(P)$(M1).RDBD CP")
+	field(INPC, "$(P)$(M1).DMOV CP")
+	field(CALC, "C && ABS(A) > B")
+	field(PREC, "3")
+	field(EGU, "$(EGU)")
+	field(HIGH, "0.5")
+	field(HSV, "MAJOR")
+	info(archive, "VAL")
+}
+
 record (ai, "$(P)$(SLIT)$(S2)") 
 {
     field(ASG, "$(ASG)")
@@ -129,7 +165,35 @@ record (ai, "$(P)$(SLIT)$(S2)")
 # Add alias to expose the underlying DMOV
 alias("$(P)$(M2):DMOV", "$(P)$(SLIT)$(S2):DMOV")
 
-record (ai, "$(P)$(SLIT)$(GAP)") 
+record (calc, "$(P)$(SLIT)$(S2):DIFF") 
+{
+    field(ASG, "$(ASG)")
+	field(DESC, "Current $(D2) SP-RBV")
+	field(INPA, "$(P)$(SLIT)$(S2):SP CP")
+	field(INPB, "$(P)$(SLIT)$(S2) CP")
+	field(CALC, "A-B")
+	field(PREC, "3")
+	field(EGU, "$(EGU)")
+}
+
+## 1 if move finished and not in tolerance, 0 otherwise
+## Goes into HIGH alarm on position error
+record (calc, "$(P)$(SLIT)$(S2):POSERR") 
+{
+    field(ASG, "$(ASG)")
+	field(DESC, "$(D2) pos within tol")
+	field(INPA, "$(P)$(SLIT)$(S2):DIFF CP")
+	field(INPB, "$(P)$(M2).RDBD CP")
+	field(INPC, "$(P)$(M2).DMOV CP")
+	field(CALC, "C && ABS(A) > B")
+	field(PREC, "3")
+	field(EGU, "$(EGU)")
+	field(HIGH, "0.5")
+	field(HSV, "MAJOR")
+    info(archive, "VAL")
+}
+
+record (ai, "$(P)$(SLIT)$(GAP)")
 {
     field(ASG, "$(ASG)")
 	field(DESC, "Current $(DGAP) gap")
@@ -149,6 +213,44 @@ record(calc, "$(P)$(SLIT)$(GAP):DMOV"){
     field(INPB, "$(P)$(M2):DMOV")
     field("CALC", "A + B >= 2")
 }
+# Use an alias to define the DMOV for the centre as being the same as the GAP
+# because they use the same motors.
+# This does mean the centre appears to be moving when the gap is changing but it
+# is an acceptable compromise
+alias("$(P)$(SLIT)$(GAP):DMOV", "$(P)$(SLIT)$(CENTRE):DMOV")
+
+record (calc, "$(P)$(SLIT)$(GAP):DIFF") 
+{
+    field(ASG, "$(ASG)")
+	field(DESC, "Current $(DGAP) SP-RBV")
+	field(INPA, "$(P)$(SLIT)$(GAP):SP CP")
+	field(INPB, "$(P)$(SLIT)$(GAP) CP")
+	field(CALC, "A-B")
+	field(PREC, "3")
+	field(EGU, "$(EGU)")
+}
+
+## 1 if move finished and not in tolerance, 0 otherwise
+## Goes into HIGH alarm on position error
+## we could also check INPOS of the two blades
+## but we may want to compare to SQRT(B*B+C*C) rather than B+C ?
+record (calc, "$(P)$(SLIT)$(GAP):POSERR") 
+{
+    field(ASG, "$(ASG)")
+	field(DESC, "$(GAP) pos within tol")
+	field(INPA, "$(P)$(SLIT)$(GAP):DIFF CP")
+	field(INPB, "$(P)$(M1).RDBD CP")
+	field(INPC, "$(P)$(M2).RDBD CP")
+	field(INPD, "$(P)$(SLIT)$(GAP):DMOV CP")
+	field(CALC, "D && ABS(A) > (B + C)")
+	field(PREC, "3")
+	field(EGU, "$(EGU)")
+	field(HIGH, "0.5")
+	field(HSV, "MAJOR")
+    info(archive, "VAL")
+    info(INTEREST, "HIGH")
+}
+
 
 record (ai, "$(P)$(SLIT)$(CENTRE)") 
 {
@@ -160,11 +262,38 @@ record (ai, "$(P)$(SLIT)$(CENTRE)")
     info(INTEREST, "HIGH")
 }
 
-# Use an alias to define the DMOV for the centre as being the same as the GAP
-# because they use the same motors.
-# This does mean the centre appears to be moving when the gap is changing but it
-# is an acceptable compromise
-alias("$(P)$(SLIT)$(GAP):DMOV", "$(P)$(SLIT)$(CENTRE):DMOV")
+
+record (calc, "$(P)$(SLIT)$(CENTRE):DIFF") 
+{
+    field(ASG, "$(ASG)")
+	field(DESC, "Current $(DGAP) SP-RBV")
+	field(INPA, "$(P)$(SLIT)$(CENTRE):SP CP")
+	field(INPB, "$(P)$(SLIT)$(CENTRE) CP")
+	field(CALC, "A-B")
+	field(PREC, "3")
+	field(EGU, "$(EGU)")
+}
+
+## 1 if move finished and not in tolerance, 0 otherwise
+## Goes into HIGH alarm on position error
+## we could also check INPOS of the two blades
+## but we may want to compare to SQRT(B*B+C*C) rather than B+C ?
+record (calc, "$(P)$(SLIT)$(CENTRE):POSERR") 
+{
+    field(ASG, "$(ASG)")
+	field(DESC, "$(CENTRE) pos within tol")
+	field(INPA, "$(P)$(SLIT)$(CENTRE):DIFF CP")
+	field(INPB, "$(P)$(M1).RDBD CP")
+	field(INPC, "$(P)$(M2).RDBD CP")
+	field(INPD, "$(P)$(SLIT)$(CENTRE):DMOV CP")
+	field(CALC, "D && ABS(A) > (B + C)")
+	field(PREC, "3")
+	field(EGU, "$(EGU)")
+	field(HIGH, "0.5")
+	field(HSV, "MAJOR")
+    info(archive, "VAL")
+    info(INTEREST, "HIGH")
+}
 
 # slip setpoint -> motor setpoint -> jaws setpoint readback
 record (transform, "$(P)$(SLIT)$(S1)_SPALT") 
@@ -225,6 +354,7 @@ record(calcout, "$(P)$(SLIT)$(S2)$(M2)PUT")
 }
 
 # This record also puts the GAP and CENTRE into alarm, but not the axes themselves
+# INPJ and INPK are just to propagate a position error alarm
 record (transform, "$(P)$(SLIT)$(S1)$(S2)_RBALT"){
     field(ASG, "$(ASG)")
 	field(DESC, "Motor Value to Jaws Value")
@@ -233,6 +363,8 @@ record (transform, "$(P)$(SLIT)$(S1)$(S2)_RBALT"){
 	field(INPE, "$(P)$(M1).RBV NPP MS")
 	field(INPF, "$(P)$(M2).RBV NPP MS")
 	field(INPI, "$(P)$(SLIT)$(S1)_SWMULT.VAL")
+    field(INPJ, "$(P)$(SLIT)$(GAP):POSERR NPP MS")
+    field(INPK, "$(P)$(SLIT)$(CENTRE):POSERR NPP MS")
 	field(CLCA, "E")
 	field(CLCB, "F*I")
 	field(CLCC, "(A-B)")
@@ -248,6 +380,8 @@ record (transform, "$(P)$(SLIT)$(S1)$(S2)_RBALT"){
 	field(CMTD, "$(DCENTRE) Value")
 	field(CMTE, "Current $(M1) Value")
 	field(CMTF, "Current $(M2) Value")
+	field(CMTJ, "$(GAP) POSERR")
+	field(CMTK, "$(CENTRE) POSERR")
 	field(SDIS, "$(P)$(SLIT)$(S1)_SPALT.PACT")
     field(FLNK, "$(P)$(SLIT)$(S1)_ALARM")
 }
@@ -272,6 +406,7 @@ record (transform, "$(P)$(SLIT)$(S1)_ALARM"){
     field(COPT, "Always")
 	field(INPE, "$(P)$(SLIT)$(S1)_INTMED.VAL NPP NMS")
 	field(INPF, "$(P)$(M1).RBV NPP MS")
+	field(INPG, "$(P)$(SLIT)$(S1):POSERR NPP MS")
 	field(CLCB, "E")
 	field(OUTB, "$(P)$(SLIT)$(S1).VAL PP MS")
 	field(PREC, "3")
@@ -287,6 +422,7 @@ record (transform, "$(P)$(SLIT)$(S2)_ALARM"){
     field(COPT, "Always")
 	field(INPE, "$(P)$(SLIT)$(S2)_INTMED.VAL NPP NMS")
 	field(INPF, "$(P)$(M2).RBV NPP MS")
+	field(INPG, "$(P)$(SLIT)$(S2):POSERR NPP MS")
 	field(CLCB, "E")
 	field(OUTB, "$(P)$(SLIT)$(S2).VAL PP MS")
 	field(PREC, "3")
