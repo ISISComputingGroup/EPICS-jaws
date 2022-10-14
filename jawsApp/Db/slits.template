@@ -9,6 +9,10 @@
 # if we initialise last SP to motor RBV or previous jaws SP (this
 # does not sent the setpoint, but it will be used as part of future move
 # calculations)
+# we use autosaveFields_pass0 as it is saved more frequently and is
+# how positions rather than settings are usually stored
+# we autosave blades as well as gap and centre, but only use the blade
+# ones on startup, the centre/gap are more to keep a historic log 
 record (ao, "$(P)$(SLIT)$(S1):SP")
 {
     field(ASG, "$(ASG)")
@@ -17,11 +21,20 @@ record (ao, "$(P)$(SLIT)$(S1):SP")
 	field(PREC, "3")
 	field(EGU, "$(EGU)")
     field(SDIS, "$(P)$(SLIT)$(S1)$(S2)INIT.PACT")
+	field(UDFS, "NO_ALARM")
     info(archive, "VAL")
-    info(autosaveFields, "VAL")
+    info(autosaveFields_pass0, "VAL")
     info(INTEREST, "HIGH")
 }
-alias("$(P)$(SLIT)$(S1):SP", "$(P)$(SLIT)$(S1):SP:RBV")
+
+record (ai, "$(P)$(SLIT)$(S1):SP:RBV")
+{
+    field(ASG, "$(ASG)")
+	field(DESC, "$(D1) Setpoint RB")
+	field(PREC, "3")
+	field(EGU, "$(EGU)")
+    info(archive, "VAL")
+}
 
 record (ao, "$(P)$(SLIT)$(S2):SP")
 {
@@ -31,11 +44,20 @@ record (ao, "$(P)$(SLIT)$(S2):SP")
 	field(PREC, "3")
 	field(EGU, "$(EGU)")
     field(SDIS, "$(P)$(SLIT)$(S1)$(S2)INIT.PACT")
+	field(UDFS, "NO_ALARM")
     info(archive, "VAL")
-    info(autosaveFields, "VAL")
+    info(autosaveFields_pass0, "VAL")
     info(INTEREST, "HIGH")
 }
-alias("$(P)$(SLIT)$(S2):SP", "$(P)$(SLIT)$(S2):SP:RBV")
+
+record (ai, "$(P)$(SLIT)$(S2):SP:RBV")
+{
+    field(ASG, "$(ASG)")
+	field(DESC, "$(D2) Setpoint RB")
+	field(PREC, "3")
+	field(EGU, "$(EGU)")
+    info(archive, "VAL")
+}
 
 record (ao, "$(P)$(SLIT)$(GAP):SP")
 {
@@ -45,10 +67,20 @@ record (ao, "$(P)$(SLIT)$(GAP):SP")
 	field(PREC, "3")
 	field(EGU, "$(EGU)")
     field(SDIS, "$(P)$(SLIT)$(S1)$(S2)INIT.PACT")
+	field(UDFS, "NO_ALARM")
     info(archive, "VAL")
+    info(autosaveFields_pass0, "VAL")
     info(INTEREST, "HIGH")
 }
-alias("$(P)$(SLIT)$(GAP):SP", "$(P)$(SLIT)$(GAP):SP:RBV")
+
+record (ai, "$(P)$(SLIT)$(GAP):SP:RBV")
+{
+    field(ASG, "$(ASG)")
+	field(DESC, "$(DGAP) Setpoint RB")
+	field(PREC, "3")
+	field(EGU, "$(EGU)")
+    info(archive, "VAL")
+}
 
 record (ao, "$(P)$(SLIT)$(CENTRE):SP")
 {
@@ -59,10 +91,20 @@ record (ao, "$(P)$(SLIT)$(CENTRE):SP")
 	field(EGU, "$(EGU)")
 	field(DISP, "$(CENT_DISP)")
     field(SDIS, "$(P)$(SLIT)$(S1)$(S2)INIT.PACT")
+	field(UDFS, "NO_ALARM")
     info(archive, "VAL")
+    info(autosaveFields_pass0, "VAL")
     info(INTEREST, "HIGH")
 }
-alias("$(P)$(SLIT)$(CENTRE):SP", "$(P)$(SLIT)$(CENTRE):SP:RBV")
+
+record (ai, "$(P)$(SLIT)$(CENTRE):SP:RBV")
+{
+    field(ASG, "$(ASG)")
+	field(DESC, "$(DCENTRE) Setpoint RB")
+	field(PREC, "3")
+	field(EGU, "$(EGU)")
+    info(archive, "VAL")
+}
 
 ## set preferred SPALT values on init
 ## default is to sync SP from motor RBV, but can also
@@ -481,4 +523,31 @@ record(stringin, "$(P)$(SLIT)$(S2):MOTOR") {
 # Create some aliases for the motors for use by the GUI etc
 alias("$(P)$(M1)", "$(P)$(SLIT)$(S1):MTR")
 alias("$(P)$(M2)", "$(P)$(SLIT)$(S2):MTR")
+
+## feed back motor setpoint to jaws SP:RBV
+record (transform, "$(P)$(SLIT)$(S1)$(S2)_SPRBALT"){
+	field(ASG, "$(ASG)")
+	field(DESC, "Motor SP to Jaws SP:RBV")
+	field(COPT, "Always")
+	field(SCAN, ".1 second")
+	field(INPE, "$(P)$(M1).VAL NPP MS")
+	field(INPF, "$(P)$(M2).VAL NPP MS")
+	field(INPI, "$(P)$(SLIT)$(S1)_SWMULT.VAL")
+	field(CLCA, "E")
+	field(CLCB, "F*I")
+	field(CLCC, "(A-B)")
+	field(CLCD, "(A+B)/2")
+	field(OUTA, "$(P)$(SLIT)$(S1):SP:RBV PP MS")
+	field(OUTB, "$(P)$(SLIT)$(S2):SP:RBV PP MS")
+	field(OUTC, "$(P)$(SLIT)$(GAP):SP:RBV PP MS")
+	field(OUTD, "$(P)$(SLIT)$(CENTRE):SP:RBV PP MS")
+	field(PREC, "3")
+	field(CMTA, "$(D1) Value")
+	field(CMTB, "$(D2) Value")
+	field(CMTC, "$(DGAP) Value")
+	field(CMTD, "$(DCENTRE) Value")
+	field(CMTE, "Current $(M1) Value")
+	field(CMTF, "Current $(M2) Value")
+	field(SDIS, "$(P)$(SLIT)$(S1)_SPALT.PACT")
+}
 
