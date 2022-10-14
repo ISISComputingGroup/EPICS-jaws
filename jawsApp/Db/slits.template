@@ -9,6 +9,10 @@
 # if we initialise last SP to motor RBV or previous jaws SP (this
 # does not sent the setpoint, but it will be used as part of future move
 # calculations)
+# we use autosaveFields_pass0 as it is saved more frequently and is
+# how positions rather than settings are usually stored
+# we autosave blades as well as gap and centre, but only use the blade
+# ones on startup, the centre/gap are more to keep a historic log 
 record (ao, "$(P)$(SLIT)$(S1):SP")
 {
     field(ASG, "$(ASG)")
@@ -17,8 +21,9 @@ record (ao, "$(P)$(SLIT)$(S1):SP")
 	field(PREC, "3")
 	field(EGU, "$(EGU)")
     field(SDIS, "$(P)$(SLIT)$(S1)$(S2)INIT.PACT")
+	field(UDFS, "NO_ALARM")
     info(archive, "VAL")
-    info(autosaveFields, "VAL")
+    info(autosaveFields_pass0, "VAL")
     info(INTEREST, "HIGH")
 }
 alias("$(P)$(SLIT)$(S1):SP", "$(P)$(SLIT)$(S1):SP:RBV")
@@ -31,8 +36,9 @@ record (ao, "$(P)$(SLIT)$(S2):SP")
 	field(PREC, "3")
 	field(EGU, "$(EGU)")
     field(SDIS, "$(P)$(SLIT)$(S1)$(S2)INIT.PACT")
+	field(UDFS, "NO_ALARM")
     info(archive, "VAL")
-    info(autosaveFields, "VAL")
+    info(autosaveFields_pass0, "VAL")
     info(INTEREST, "HIGH")
 }
 alias("$(P)$(SLIT)$(S2):SP", "$(P)$(SLIT)$(S2):SP:RBV")
@@ -45,7 +51,9 @@ record (ao, "$(P)$(SLIT)$(GAP):SP")
 	field(PREC, "3")
 	field(EGU, "$(EGU)")
     field(SDIS, "$(P)$(SLIT)$(S1)$(S2)INIT.PACT")
+	field(UDFS, "NO_ALARM")
     info(archive, "VAL")
+    info(autosaveFields_pass0, "VAL")
     info(INTEREST, "HIGH")
 }
 alias("$(P)$(SLIT)$(GAP):SP", "$(P)$(SLIT)$(GAP):SP:RBV")
@@ -59,7 +67,9 @@ record (ao, "$(P)$(SLIT)$(CENTRE):SP")
 	field(EGU, "$(EGU)")
 	field(DISP, "$(CENT_DISP)")
     field(SDIS, "$(P)$(SLIT)$(S1)$(S2)INIT.PACT")
+	field(UDFS, "NO_ALARM")
     info(archive, "VAL")
+    info(autosaveFields_pass0, "VAL")
     info(INTEREST, "HIGH")
 }
 alias("$(P)$(SLIT)$(CENTRE):SP", "$(P)$(SLIT)$(CENTRE):SP:RBV")
