@@ -2,6 +2,10 @@
 # This is needed where vertical and horizontal blades are controlled by separate motor IOCs and thus need to have their .dbs loaded separately.
 # Expects split_jaws_header_vertical.db to be loaded to work correctly
 
+global {
+    IFINIT_FROM_AS=\$(IFINIT_FROM_AS=#), IFNOTINIT_FROM_AS=\$(IFNOTINIT_FROM_AS=)
+}
+
 file "$(JAWS)/jawsApp/Db/slits.template" {
     { P=\$(P), SLIT=\$(JAWS), M1=\$(mXE), M2=\$(mXW), S1=JE, S2=JW, D1=East, D2=West, GAP=HGAP, DGAP=Horizontal, CENTRE=HCENT, DCENTRE=Horizontal, ASG=\$(ASG=DEFAULT), EGU=\$(EGU=), CENT_DISP=\$(CENT_DISP=0) }
 }

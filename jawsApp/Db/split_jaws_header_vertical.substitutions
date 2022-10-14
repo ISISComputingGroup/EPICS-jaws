@@ -2,6 +2,10 @@
 # This is needed where vertical and horizontal blades are controlled by separate motor IOCs and thus need to have their .dbs loaded separately.
 # Expects split_jaws_horizontal.db to be loaded to work correctly
 
+global {
+    IFINIT_FROM_AS=\$(IFINIT_FROM_AS=#), IFNOTINIT_FROM_AS=\$(IFNOTINIT_FROM_AS=)
+}
+
 file "$(JAWS)/jawsApp/Db/jawsheader.template" {
     { P=\$(P), JAWS=\$(JAWS), mXN=\$(mXN), mXS=\$(mXS), mXE=\$(mXE), mXW=\$(mXW), ASG=\$(ASG=DEFAULT) }
 }
