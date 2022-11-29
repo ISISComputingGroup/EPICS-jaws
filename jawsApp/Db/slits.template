@@ -168,6 +168,7 @@ record (calc, "$(P)$(SLIT)$(S1):POSERR")
 	field(EGU, "$(EGU)")
 	field(HIGH, "0.5")
 	field(HSV, "MAJOR")
+	field(ASG, "READONLY")
 	info(archive, "VAL")
 }
 
@@ -208,6 +209,7 @@ record (calc, "$(P)$(SLIT)$(S2):POSERR")
 	field(EGU, "$(EGU)")
 	field(HIGH, "0.5")
 	field(HSV, "MAJOR")
+	field(ASG, "READONLY")
     info(archive, "VAL")
 }
 
@@ -265,6 +267,7 @@ record (calc, "$(P)$(SLIT)$(GAP):POSERR")
 	field(EGU, "$(EGU)")
 	field(HIGH, "0.5")
 	field(HSV, "MAJOR")
+	field(ASG, "READONLY")
     info(archive, "VAL")
     info(INTEREST, "HIGH")
 }
@@ -309,6 +312,7 @@ record (calc, "$(P)$(SLIT)$(CENTRE):POSERR")
 	field(EGU, "$(EGU)")
 	field(HIGH, "0.5")
 	field(HSV, "MAJOR")
+	field(ASG, "READONLY")
     info(archive, "VAL")
     info(INTEREST, "HIGH")
 }
