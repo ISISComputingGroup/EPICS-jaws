@@ -1,5 +1,9 @@
 # Create a .db file with records for a set of jaws that consists of vertical blades only (North and South)
 
+global {
+    IFINIT_FROM_AS=\$(IFINIT_FROM_AS=#), IFNOTINIT_FROM_AS=\$(IFNOTINIT_FROM_AS=)
+}
+
 file "$(JAWS)/jawsApp/Db/jaws_vertical_header.template" {
     { P=\$(P), JAWS=\$(JAWS), mXN=\$(mXN), mXS=\$(mXS), ASG=\$(ASG=DEFAULT) }
 }

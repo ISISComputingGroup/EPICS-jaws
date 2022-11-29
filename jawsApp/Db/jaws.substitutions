@@ -1,5 +1,9 @@
 # Creates a .db file with records for one full standard set of jaws.
 
+global {
+    IFINIT_FROM_AS=\$(IFINIT_FROM_AS=#), IFNOTINIT_FROM_AS=\$(IFNOTINIT_FROM_AS=)
+}
+
 file "$(JAWS)/jawsApp/Db/jawsheader.template" {
     { P=\$(P), JAWS=\$(JAWS), mXN=\$(mXN), mXS=\$(mXS), mXE=\$(mXE), mXW=\$(mXW), ASG=\$(ASG=DEFAULT) }
 }
@@ -22,3 +26,4 @@ file "$(UTILITIES)/utilitiesApp/Db/field_setter.template" {
     {P=\$(P), TO=\$(JAWS)HCENT, FROM=\$(mXE), FIELD=ADEL}
 
 }
+
