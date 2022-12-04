@@ -158,7 +158,7 @@ record (calc, "$(P)$(SLIT)$(S1):DIFF")
 ## Goes into HIGH alarm on position error
 record (calc, "$(P)$(SLIT)$(S1):POSERR")
 {
-	field(ASG, "$(ASG)")
+	field(ASG, "READONLY")
 	field(DESC, "$(D1) pos within tol")
 	field(INPA, "$(P)$(SLIT)$(S1):DIFF CP")
 	field(INPB, "$(P)$(M1).RDBD CP")
@@ -168,7 +168,6 @@ record (calc, "$(P)$(SLIT)$(S1):POSERR")
 	field(EGU, "$(EGU)")
 	field(HIGH, "0.5")
 	field(HSV, "MAJOR")
-	field(ASG, "READONLY")
 	info(archive, "VAL")
 }
 
@@ -199,7 +198,7 @@ record (calc, "$(P)$(SLIT)$(S2):DIFF")
 ## Goes into HIGH alarm on position error
 record (calc, "$(P)$(SLIT)$(S2):POSERR") 
 {
-    field(ASG, "$(ASG)")
+	field(ASG, "READONLY")
 	field(DESC, "$(D2) pos within tol")
 	field(INPA, "$(P)$(SLIT)$(S2):DIFF CP")
 	field(INPB, "$(P)$(M2).RDBD CP")
@@ -209,7 +208,6 @@ record (calc, "$(P)$(SLIT)$(S2):POSERR")
 	field(EGU, "$(EGU)")
 	field(HIGH, "0.5")
 	field(HSV, "MAJOR")
-	field(ASG, "READONLY")
     info(archive, "VAL")
 }
 
@@ -256,7 +254,7 @@ record (calc, "$(P)$(SLIT)$(GAP):DIFF")
 ## but we may want to compare to SQRT(B*B+C*C) rather than B+C ?
 record (calc, "$(P)$(SLIT)$(GAP):POSERR") 
 {
-    field(ASG, "$(ASG)")
+	field(ASG, "READONLY")
 	field(DESC, "$(GAP) pos within tol")
 	field(INPA, "$(P)$(SLIT)$(GAP):DIFF CP")
 	field(INPB, "$(P)$(M1).RDBD CP")
@@ -267,7 +265,6 @@ record (calc, "$(P)$(SLIT)$(GAP):POSERR")
 	field(EGU, "$(EGU)")
 	field(HIGH, "0.5")
 	field(HSV, "MAJOR")
-	field(ASG, "READONLY")
     info(archive, "VAL")
     info(INTEREST, "HIGH")
 }
@@ -301,7 +298,7 @@ record (calc, "$(P)$(SLIT)$(CENTRE):DIFF")
 ## but we may want to compare to SQRT(B*B+C*C) rather than B+C ?
 record (calc, "$(P)$(SLIT)$(CENTRE):POSERR") 
 {
-    field(ASG, "$(ASG)")
+	field(ASG, "READONLY")
 	field(DESC, "$(CENTRE) pos within tol")
 	field(INPA, "$(P)$(SLIT)$(CENTRE):DIFF CP")
 	field(INPB, "$(P)$(M1).RDBD CP")
@@ -312,7 +309,6 @@ record (calc, "$(P)$(SLIT)$(CENTRE):POSERR")
 	field(EGU, "$(EGU)")
 	field(HIGH, "0.5")
 	field(HSV, "MAJOR")
-	field(ASG, "READONLY")
     info(archive, "VAL")
     info(INTEREST, "HIGH")
 }
