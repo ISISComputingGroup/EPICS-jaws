@@ -495,3 +495,9 @@ record(stringin, "$(P)$(SLIT)$(S2):MOTOR") {
 alias("$(P)$(M1)", "$(P)$(SLIT)$(S1):MTR")
 alias("$(P)$(M2)", "$(P)$(SLIT)$(S2):MTR")
 
+alias("$(P)$(M1)_IOCNAME", "$(P)$(SLIT)$(S1):MTR_IOCNAME")
+alias("$(P)$(M2)_IOCNAME", "$(P)$(SLIT)$(S2):MTR_IOCNAME")
+
+alias("$(P)$(M1)_able", "$(P)$(SLIT)$(S1):MTR_able")
+alias("$(P)$(M2)_able", "$(P)$(SLIT)$(S2):MTR_able")
+
