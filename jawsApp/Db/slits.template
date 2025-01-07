@@ -58,6 +58,52 @@ record (ao, "$(P)$(SLIT)$(GAP):SP")
 }
 alias("$(P)$(SLIT)$(GAP):SP", "$(P)$(SLIT)$(GAP):SP:RBV")
 
+#####
+record (longout, "$(P)$(SLIT)$(GAP):MIN:SP")
+{
+    field(ASG, "$(ASG)")
+	field(DESC, "Minimum $(DGAP) Setpoint")
+	field(UDFS, "NO_ALARM")
+    info(archive, "VAL")
+    info(autosaveFields_pass0, "VAL")
+    info(INTEREST, "HIGH")
+}
+alias("$(P)$(SLIT)$(GAP):MIN:SP", "$(P)$(SLIT)$(GAP):MIN:SP:RBV")
+
+record (calcout, "$(P)$(SLIT)$(GAP):M1:ERROR")
+{
+	field(ASG, "READONLY")
+	field(SCAN, ".1 second")
+	field(DESC, "Check $(GAP) position error")
+	field(INPA, "$(P)$(SLIT)$(GAP)")
+	field(INPB, "$(P)$(SLIT)$(GAP):MIN:SP:RBV")
+	field(CALC, "A < B && A < C && C # 0; C:= A")
+	field(HSV, "MAJOR")
+	info(archive, "VAL")
+	field(DOPT, "Use OCAL") 
+	field(OOPT, "When Non-zero")
+	field(OCAL, "1")
+	field(OUT, "$(P)$(M1).STOP PP MS")
+}
+
+record (calcout, "$(P)$(SLIT)$(GAP):M2:ERROR")
+{
+	field(ASG, "READONLY")
+	field(SCAN, ".1 second")
+	field(DESC, "Check $(GAP) position error")
+	field(INPA, "$(P)$(SLIT)$(GAP)")
+	field(INPB, "$(P)$(SLIT)$(GAP):MIN:SP:RBV")
+	field(CALC, "A < B && A < C && C # 0; C:= A")
+	field(HSV, "MAJOR")
+	info(archive, "VAL")
+	field(DOPT, "Use OCAL")
+	field(OOPT, "When Non-zero")
+	field(OCAL, "1")
+	field(OUT, "$(P)$(M2).STOP PP MS")
+}
+
+#####
+
 record (ao, "$(P)$(SLIT)$(CENTRE):SP")
 {
     field(ASG, "$(ASG)")
